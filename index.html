@@ -1,0 +1,687 @@
+<!--
+
+Welcome.
+
+Thanks for reading.
+
+Websites are beautiful examples of collaborative creation. 
+Even if someone writes each bit of code that generates a
+website -- and that's very rarely ever the case --
+they are also benefitting from the code used to create the
+browser, the operating system, and the network packets
+that travel from node to node to deliver the code
+from where it lives to where it gets executed.
+
+Jonnie wrote quite a lot of this, but would like to
+acknowledge that they spend a lot of time on search
+engines (duckduckgo.com, friends don't let friends use
+Google.com), stackexchange.com, and swears by w3schools.com
+as a language reference.
+
+
+-->
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Emojiency: Jonnie Wilder</title>
+		<link href="https://fonts.googleapis.com/css?family=Ultra&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Chivo:300,300i,400,400i,700,700i,900,900i&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+		<link href="emojiency.css" rel="stylesheet">
+<!--	<link href="debug.css" rel="stylesheet"> -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+	<body class="textured-background">
+				
+		<div class="imgFrame" id="imgFrame">
+			<img class="imgPane" id="pane" onmousedown="showLargerImage('hideme')" src="portfolio/no-image.png" alt="Expanded view of selected image.">
+			<img class="imgPaneClose" id="paneClose" onmousedown="closeImage()" src="portfolio/close-box.png" alt="close box">
+		</div>
+		
+		<div class="nav-bar">
+			<a class="nav-text-clicked" id="homenav" onmouseover="style='cursor: pointer'" onmousedown="navigate('home')">Imagine</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="graphicsnav" onmouseover="style='cursor: pointer'" onmousedown="navigate('graphics')">Graphics</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="codenav" onmouseover="style='cursor: pointer'" onmousedown="navigate('code')">Code</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="layoutnav" onmouseover="style='cursor: pointer'" onmousedown="navigate('layout')">Layout</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="writingnav" onmouseover="style='cursor: pointer'" onmousedown="navigate('writing')">Writing</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="audionav" onmouseover="style='cursor: pointer'" onmousedown="navigate('audio')">Audio</a>&nbsp;|&nbsp;
+			<a class="nav-text" id="motionnav" onmouseover="style='cursor: pointer'" onmousedown="navigate('motion')">Motion</a>
+			<a class="nav-text-clicked">&nbsp;</a>	<!--this saves the height for us, doing it here too for balance-->
+		</div>
+		
+		<div style="height: 6em"></div>
+		
+	
+<!-- Default Content / Home -->
+
+		<div id="default-content" class="content" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+			<span class="subhead">
+				You could be making<br>something awesome with
+			</span>
+			<p class="headline" style="margin: 0;">
+				Jonnie<br>WILDER
+			</p>
+			<div style="height: 1em"></div>
+			<span style="font-size: 30pt;">
+				⭐️<br>
+			</span>
+			<div style="height: 1em"></div>
+			<span class="subhead">
+				&nbsp;  Just imagine...
+			</span>
+			<img src="portfolio/jonnie-portrait-imagining.png" alt="This is Jonnie." style="display: block; border: none; background-color: Transparent; margin: 0 auto;">
+			<p class="caption">	
+				What could you accomplish with a productivity maven like Jonnie on your team?
+			</p>			
+			<div style="height: 2em"></div>
+			<span class="moons">
+				🌖 🌗 🌘 🌑 🌒 🌓 🌔
+			</span>
+			<div style="height: 3em"></div>
+			<div class="two-column-collapse-wrapper">				
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="graphics" onmousedown="navigate('graphics')" style="font-weight: 900; font-size: 24pt;">Graphics & Design</a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="body-text">
+						Jonnie produces amazing graphics with digital pens, bezier curves, and happy thoughts.
+					</p>
+					<p class="body-text">
+						An appreciation for the production and presentation of graphic artwork unlocks the holistic design process.
+					</p>
+				</div>	
+			</div>
+			
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="code" onmousedown="navigate('code')" style="font-weight: 900; font-size: 24pt;">Code & Scripting</a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="body-text">
+						With the ability to read and write code in an assortment of languages from Fortran to JavaScript, from C to Swift; 
+						Jonnie handcrafted this website's UX in HTML, CSS, and JavaScript.
+					</p>
+					<p class="body-text">
+						Having an understanding of the code underlying the presentation of a website, app, or document allows for 
+						serendipity during the prototype-to-production transition.
+					</p>
+				</div>	
+			</div>
+			
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="layout" onmousedown="navigate('layout')" style="font-weight: 900; font-size: 24pt;">Layout & Prepress</a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="body-text">
+						Whether your document lives in the digital realm and gets delivered from out of the cloud or 
+						it's printed and bound by vendors down the hall or on the other side of the world, you need it delivered in a format 
+						that's readable by both machines and humans.
+					</p>
+					<p class="body-text">
+						Jonnie understands how the organization of a document is as important in communicating its message
+						as the words and images it uses to evoke meaning and inspire action.
+					</p>
+				</div>
+			</div>	
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="writing" onmousedown="navigate('writing')" style="font-weight: 900; font-size: 24pt;">Writing & Copy</a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="body-text">
+						Stringing together words out of a thesaurus can occasionally produce something that sounds impressive, but only when the writer
+						has a <i>feel</i> for idiom and rhythm will the chosen words connect with an audience.
+					</p>
+					<p class="body-text">
+						How often does text need to be expanded to fill space, or cut to save it? Jonnie makes it fit.
+					</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="audio" onmousedown="navigate('audio')" style="font-weight: 900; font-size: 24pt;">Audio & Sound</a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="body-text">
+						With the experience recording and editing everything from interviews to scripted acting, Jonnie delivers a product you can appreciate 
+						on AirPods as well as your living room sound bar.
+					</p>
+					<p class="body-text">
+						Having an understanding of audio production helps make for better motion animation and video production. Every "whizz" needs a "bang".
+					</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="margin: 0 20px 0 0;">
+					<a class="nav-text" id="motion" onmousedown="navigate('motion')" style="font-weight: 900; font-size: 24pt;">Motion & Video</a>
+				</div>
+				<div class="right-column" style="text-align: left; margin:0 auto;">
+					<p class="body-text">
+						From motion animation to rotoscoping, title design and editing, to shooting on location, Jonnie has your video production
+						needs covered.</p>
+					<p class="body-text">
+						Having directed numerous videos from start to finish, Jonnie can jump in at any step along the way and hit the ground running.
+					</p>
+				</div>
+			</div>
+			<div style="height: 2em"></div>
+		</div>
+		
+		
+<!-- Graphic and Illustration Content -->		
+		
+		<div id="graphics-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“A digital pen never runs out of ink. Or paper.”</p>
+							
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/credit-card-flower.png')"><img src="portfolio/work-samples/credit-card-flower.png" alt="Credit Card Flower" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+				<p class="subhead" style="text-align: left;">Flower</p>
+					<p class="body-text"><em>Digital, Pixelmator</em></p>
+					<p class="body-text">The custom image for Jonnie’s credit card. 
+						“Is that one of ours?” asked the banker.</p>
+				</div>	
+			</div>
+	
+			<div style="height: 2em"></div>
+	
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/fp4-cover-art.png')"><img src="portfolio/work-samples/fp4-cover-art.png" alt="Floating.point Issue 4 Cover Art" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Enlightenment</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">Jonnie produces amazing graphics with digital pens, bezier curves, and happy thoughts. This is the cover for an
+						upcoming issue of Floating.point magazine.</p>
+				</div>	
+			</div>
+		
+			<div style="height: 2em"></div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/ichiro-brady-tshirt.jpg')"><img src="portfolio/work-samples/ichiro-brady-tshirt.jpg" alt="Who the fuck is Tom Brady?" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Ichiro the Hero</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">Someone on Reddit asked for an image of Ichiro with this caption when the story broke
+						that <a href="https://deadspin.com/ichiro-who-the-fuck-is-tom-brady-1825887120">Ichiro asked who Tom Brady was</a> after he was cold-texted by Mr. Brady, asking Ichiro to share some training tips.
+						Jonnie created the image and provided the file as a PDF so it could be printed on a t-shirt and hopes to see it out in the wild someday.</p>
+				</div>	
+			</div>
+
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/yule-tree-illo.png')"><img src="portfolio/work-samples/yule-tree-illo.png" alt="Yule Tree" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Yule Tree</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">Illustration for end-of-year holiday well-wishes social media graphic.</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/no-analogue-in-space-panel.png')"><img src="portfolio/work-samples/no-analogue-in-space-panel.png" alt="Reunion of Maya and Saba" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Reunion</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">From the comic, “No Analogue in Space” by Jonnie Wilder which appeared in issue 0x01 of Floating.point magazine. The comic
+					follows the adventure of a scientist — stranded beneath the ice of Saturn’s moon Enceladus — and a robot suffering from dementia who will go
+					to any lengths to rescue them both.</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/you-are-loved.jpg')"><img src="portfolio/work-samples/you-are-loved.jpg" alt="You are loved." width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Social Media</p>
+					<p class="body-text"><em>Digital, Pixelmator</em></p>
+					<p class="body-text">Because we all forget sometimes, Jonnie likes to post this image once a year on their Instagram account.</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/shotoniphone.png')"><img src="portfolio/work-samples/shotoniphone.png" alt="Shot on iPhone" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Social Media</p>
+					<p class="body-text"><em>Digital, Affinity Publisher</em></p>
+					<p class="body-text">Submission for Apple’s #shotoniphone photo contest.</p>
+				</div>	
+			</div>
+			
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/earth-strike.png')"><img src="portfolio/work-samples/earth-strike.png" alt="Earth Strike" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Logo</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">
+						Submission for <a href="https://www.earth-strike.com">Earth Strike</a> logo contest. Evoking the image of everyone, around the world, 
+						on strike to address climate change.
+						</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/FPposter.jpeg')"><img src="portfolio/work-samples/FPposter.jpeg" alt="repeat" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Social Media</p>
+					<p class="body-text"><em>Digital, Affinity Publisher</em></p>
+					<p class="body-text">Showcasing the art in issue #2 of Floating.point magazine, Jonnie put together this poster.</p>
+					<p class="body-text">This wasn't digital social media, no, it’s the old school kind. We pasted it up on poles around downtown Seattle.</p>
+				</div>	
+			</div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/chimera-illo.png')"><img src="portfolio/work-samples/chimera-illo.png" alt="Chimera" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Cartoon Chimera</p>
+					<p class="body-text"><em>Digital, Affinity Designer</em></p>
+					<p class="body-text">Illustration for positive self-image social media post.</p>
+				</div>	
+			</div>
+		</div>
+
+
+<!-- Code & UX Content -->		
+
+		<div id="code-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“Good code gets the job done. Great code helps other people get work done.”</p>
+			
+			<div class="codebox">
+<pre>
+				
+	Jonnie reads and writes code.
+	
+	For instance, code for this website was written by Jonnie.
+	
+	HTML(5), CSS(3), JavaScript(ECMAScript 2018)
+	are the languages used.
+	
+		~-= * =-~
+	
+	In the past, Jonnie has also written code in BASIC,  
+	Fortran, C, C++, Lingo, HyperTalk, Pascal, Java, 
+	Python, and Swift.
+	
+		~-= * =-~
+	     
+	You're welcome to audit the code used to 
+	generate this website and its user interface.
+	
+	Just right-click and choose "Show Page Source".
+
+</pre>
+
+			</div>
+							
+			<div style="height: 2em"></div>
+
+		</div>
+				
+
+<!-- Layout & Design Content -->		
+
+		<div id="layout-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“It is entirely appropriate to judge a book by its cover. That’s what covers are for.”</p>			
+			
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/mtg-ppg-book-cover.jpeg')"><img src="portfolio/work-samples/mtg-ppg-book-cover.jpeg" alt="Magic: The Gathering Pocket Player’s Guide" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Manual</p>
+					<p class="body-text">
+						Jonnie laid out and typeset, assistant art directed, and designed the front and back covers for the fourth edition Magic: The Gathering
+						Pocket Player’s Guide.
+					</p>
+					<p class="body-text">
+						The project involved working with the artists to deliver top-quality interior and exterior illustrations, to work with editorial department
+						to proofread and index the book during production, and finally to deliver the completed digital files to the printer and shepherd them through the
+						proofing process.
+					</p>
+					<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 1em"></div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/netrunner-wutechmemchip.jpeg')"><img src="portfolio/work-samples/netrunner-wutechmemchip.jpeg" alt="WuTech Mem Chip" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/netrunner-selfmodifyingcode.jpeg')"><img src="portfolio/work-samples/netrunner-selfmodifyingcode.jpeg" alt="Self-Modifying Code" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/netrunner-datawall.jpeg')"><img src="portfolio/work-samples/netrunner-datawall.jpeg" alt="Data Wall" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/netrunner-datawall20.jpeg')"><img src="portfolio/work-samples/netrunner-datawall20.jpeg" alt="Data Wall 2.0" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/netrunner-zz22speedchip.jpeg')"><img src="portfolio/work-samples/netrunner-zz22speedchip.jpeg" alt="ZZ22 Speed Chip" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Collectible Card Game</p>
+					<p class="body-text">
+						Netrunner was Wizards of the Coasts’ third major collectible card game, based on R. Talsorian Games’ Cyberpunk 2020 license and their first to make use of asymmetric rules.
+					</p>
+					<p class="body-text">
+						Jonnie produced the cards from designs by Christopher Rush, inserted artwork by each artist, and created dingbat fonts and a production process to quickly produce beta testing cards
+						in response to game design input and iteration by game designers, editors, and the art director. Once the final cards were sent to the printer,
+						the process could be handed over to the internationalization team for quick and seamless translation into multiple languages. This process
+						set the standard for producing WotC's future collectible card games going forward.
+					</p>
+					<p class="body-text">
+						Additionally, Jonnie produced mixed 3D/2D card artwork for ten different cards in the set and for the expansion set, "Proteus".
+					</p>
+				<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 1em"></div>
+			
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/danzine-no14-cover.jpeg')"><img src="portfolio/work-samples/danzine-no14-cover.jpeg" alt="Danzine Issue #14" width="300"></a>				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Non-profit ’Zine</p>
+					<p class="body-text">
+						Danzine was a Portland, Oregon non-profit ’zine packed with information for sex workers, by sex workers.
+					</p>
+					<p class="body-text">
+						Jonnie contributed design and production, illustrations and writing in addition to attending policy meetings for the organization.
+					</p>
+				<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 1em"></div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe class="scrollbox" src="https://www.floatingpoint.pub/FP2-complete-0x01.pdf"></iframe>
+					<iframe class="scrollbox" src="https://www.floatingpoint.pub/FP3-complete-free-0x02.pdf"></iframe>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Magazine</p>
+					<p class="body-text">
+						<a href="http://www.floatingpoint.pub/">Floating.point magazine</a> is a publication delivered both in print and digitally, containing art and literature
+						by contributors from Seattle and the Pacific Northwest. The print version is designed to Kindle Direct Publishing’s
+						specifications for print-on-demand publications. The PDF is rendered and uploaded, then analyzed by their software.
+						When errors occur, Jonnie can track down the solution and make the required changes quickly and efficiently.
+					</p>
+					<p class="body-text">
+						After rendering the print file, Jonnie shifts the margins to remove the book-binding gutter and adds some
+						material that offers readers the opportunity to purchase the printed product.
+					</p>
+					<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 1em"></div>
+	
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe class="scrollbox" src="portfolio/theonion/TheOnionv14n8Oct181988.pdf"></iframe>
+					<iframe class="scrollbox" src="portfolio/theonion/TheOnionv15n6February211989.pdf"></iframe>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Fake News</p>
+					<p class="body-text">
+						<i>The Onion</i> started as a weekly college newspaper distributed on the University of Wisconsin–Madison campus in Madison, Wisconsin in 1988.
+					</p>
+					<p class="body-text">
+						Jonnie was the paper’s first production manager, as well as a contributing writer and illustrator, starting around the third issue, and was credited 
+						for their work in the staff box and subsequent books as “Jonathan Hart Eddy, Layout Technology Thaumaturgist”. Along with Scott Dikkers and Pete Heise, 
+						Jonnie purchased the rights to the business from the original founders and grew the business for a year before leaving to work at Iron Crown 
+						Enterprises in Charlottesville, Virginia and a year after that, to cofound <i>The Stranger</i> in Seattle Washington. Jonnie completed sale of their 
+						share of the business to Scott and Pete in 1991.
+					</p>
+						
+					<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 1em"></div>
+	
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe class="scrollbox" src="portfolio/thestranger/thestrangerv1n8.pdf"></iframe>
+					<iframe class="scrollbox" src="portfolio/thestranger/thestrangerv2n1.pdf"></iframe>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Alt Weekly</p>
+					<p class="body-text">
+						After leaving <i>The Onion</i>, many of us made plans to start again in a new city. We tried to replicate the same model of the 
+						weekly college newspaper in Seattle, Washington and focused our distribution efforts on the University District. <i>The Stranger</i> 
+						quickly branched out to include Capitol Hill: the gay neighborhood, and Belltown: home of the growing Seattle punk rock music scene 
+						in the early ’90s. As we branched out, so too did our editorial and art direction.
+					</p>
+					<p class="body-text">
+						Jonnie was an art director, production manager, and partner at <i>The Stranger</i>. In addition to building finance and IT infrastructure, 
+						they also contributed illustrations and writing; either uncredited, as "Jonathan Hart Eddy", or as “Tony Ramirez”.
+					</p>
+						
+					<p class="body-text">
+					</p>
+				</div>	
+			</div>
+
+			<div style="height: 1em"></div>
+
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<a onmousedown="showLargerImage('portfolio/work-samples/lrc-news-january98.jpeg')"><img src="portfolio/work-samples/lrc-news-january98.jpeg" alt="LRC News" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/lrc-news-february98.jpeg')"><img src="portfolio/work-samples/lrc-news-february98.jpeg" alt="LRC News" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/lrc-news-march98.jpeg')"><img src="portfolio/work-samples/lrc-news-march98.jpeg" alt="LRC News" width="300"></a>
+					<a onmousedown="showLargerImage('portfolio/work-samples/lrc-news-june98.jpeg')"><img src="portfolio/work-samples/lrc-news-june98.jpeg" alt="LRC News" width="300"></a>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Monthly Newspaper</p>
+					<p class="body-text">
+						Jonnie volunteered at the Lesbian Resource Center typesetting the LRC News and contributing illustrations during early 1998 for editor Yuri Sagawa. 
+					</p>
+					<p class="body-text">
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 2em"></div>
+		</div>
+		
+
+<!-- Writing and Copy Content -->		
+
+		<div id="writing-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“Beautiful writing is the composition of lies so they resonate in the heart as honest truth.”</p>
+							
+			<div class="scrollbox">
+				<iframe src="bloggityblogblog/2019/02/farewell-worthy-adversary/" style="height:100%;width:100%;border:none;"></iframe>
+			</div>
+
+			<div class="scrollbox" style="padding: 0; overflow: visible;">
+				<iframe src="bloggityblogblog/2017/05/international-noobs-day/" style="height:100%;width:100%;border:none;"></iframe>
+			</div>
+			
+			<div class="scrollbox" style="padding: 0; overflow: visible;">
+				<iframe src="bloggityblogblog/2017/03/artificial-intelligence-needs-our-help-lets-design-a-user-experience-for-ai/" style="height:100%;width:100%;border:none;"></iframe>
+			</div>
+
+			<div class="scrollbox" style="padding: 0; overflow: visible;">
+				<iframe src="bloggityblogblog/2017/04/doing-it-right/" style="height:100%;width:100%;border:none;"></iframe>
+			</div>
+
+			<div class="scrollbox" style="padding: 0; overflow: visible;">
+				<iframe src="bloggityblogblog/2017/04/morality-monday-mash/" style="height:100%;width:100%;border:none;"></iframe>
+			</div>
+			
+		</div>
+	
+
+<!-- Audio and Mixing Content -->		
+
+		<div id="audio-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“Making something sound good, starts with making good sound.”</p>
+							
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/AvpYOT4IQ54" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/pG7NpDf0160" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/u7fVFy6hEB8" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/WAazBIc4ByA" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/YmMRhE4ABBw" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/naZO43ZPtiE" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/gXfoXnkTeSQ" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/2V-UsqE0Ehg" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 2em"></div>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Podcast</p>
+					<p class="body-text">Jonnie worked with Sarah Studer and Andy Spletzer to create an eight-episode podcast for Impact Hub Seattle.</p>
+					<p class="body-text">Over the course of three months we produced scripts and recorded interviews with guests. Jonnie took the audio recordings
+						and edited them together in Logic Pro X, adding narration by Sarah and music recorded on the Impact Hub's donated piano (played by
+						Natalia Fandel) to put together an audio journey that’s reminiscent of the weekly tour given of the
+						Impact Hub Seattle campus.</p>
+					<p class="body-text">Each episode focuses on one of the stakeholders involved in the founding, funding, and functioning of the community.
+						From the individual trajectories that brought the of the initial investors together to the story of the four-generations of Masins who 
+						lease the Masins Furniture building, “HubCast” walks the listener through the halls that house a mobile coffee cart company, 
+						an art machine for social change, an accelerator for fledgling conscious companies, and a maker space for educators, designers, 
+						engineers, and artists.  
+					</p>
+				</div>	
+			</div>
+		</div>
+		
+
+<!-- Motion and Animation Content -->		
+
+		<div id="motion-content" class="content-hidden" style="text-align:center; min-width: 350px; max-width: 900px; margin: 0 auto;">
+
+			<p class="small-headline">“If the media is the message, then video is a swindle and we’re all suckers.”</p>
+							
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<video width="350" autoplay controls loop><source src="portfolio/work-samples/herohouselogoanim.mp4" type="video/mp4"></video>
+					<div style="height: 1em"></div>
+					<video width="350" autoplay controls loop><source src="portfolio/work-samples/seattleclubhouselogoanim.mp4" type="video/mp4"></video>
+					<div style="height: 1em"></div>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Animated Logos</p>
+					<p class="body-text">Five-second aimation of static <a href="http://www.herohousenw.org/">HERO House NW</a> logo. 
+						Evoking the building of the clubhouse on the values of Hope, Empowerment, Relationships, and Opportunity.
+					</p>
+					<p class="body-text">Two-second aimation of static <a href="http://www.seattleclubhouse.org/">Seattle Clubhouse</a> logo. 
+					Evoking the friendliness and welcome from the two characters under the protective shelter provided by community.
+					</p>
+				</div>	
+			</div>
+	
+			<div style="height: 2em"></div>
+		
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/jT85G3bBz_E" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Rotoscoping</p>
+					<p class="body-text">This was a fun rotoscoping challenge in Final Cut Pro X. Jonnie shot the video, added a mask to the peanut butter jar, put together the script, and added the titles and sound. In that order.</p>
+				</div>	
+			</div>
+	
+			<div style="height: 2em"></div>
+			<div class="two-column-collapse-wrapper">
+				<div class="left-column" style="text-align:center;">
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/cYvPb2YwlDU" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/qvhYjvWS7L8" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/v4IAB7F3Uzs" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/Puji7PJW9xw" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 1em"></div>
+					<iframe width="400" height="225" src="https://www.youtube.com/embed/rnwSjT5neOs" style="border: none;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<div style="height: 2em"></div>
+				</div>
+				<div class="right-column" style="text-align:left; margin:0 auto;">
+					<p class="subhead" style="text-align: left;">Talk Show Series</p>
+					<p class="body-text">Jonnie worked with Sarah Studer and Natalia Fandel of Impact Hub Seattle to produce a talkshow-style series of videos
+						highlighting the weekly-goings-on at their co-working space for social enterprises, non-profits, and community organizations.</p>
+					<p class="body-text">Over the course of two months, we produced eight conversational interview videos starring the members of the Impact Hub Seattle
+						community.</p> 
+					<p class="body-text">On-location shoots include the top of the Smith Tower, Waterfall Garden Park, and various locations within the 
+						Masin Furniture building and the adjoining buildings on Impact Hub Seattle's campus.
+				</div>	
+			</div>
+		</div>
+
+		<footer>
+			
+		<div style="text-align:center; max-width:450px; margin: 0 auto; padding: 2em 0 2em 0;">
+			<span class="moons">🌒 🌓 🌔 🌕 🌖 🌗 🌘</span>
+			<a onmouseover="style='cursor: pointer'" onmousedown="navigate('none')"><img src="portfolio/jie-transparent.png" alt="jie" style="height: 100px; border: none; background-color: Transparent;"></a>
+		</div>
+		
+		<div class="foot-bar">
+				<div class="foot-left-column">
+					<a href="mailto:jonnie@emojiency.com"><img src="portfolio/email-icon.png" class="icon-left" alt="Send Email" height="50" /></a>
+					<a href="/portfolio/jonnie-wilder-resume.pdf"><img src="portfolio/resume-icon.png"class="icon-left" alt="Jonnie Wilder Resume" height="50" /></a>
+				</div>
+				<div class="foot-center-column">
+					<p>Designer, writer, and illustrator with a passion for print, looking to utilize communications skills in a creative problem-solving environment.</p>
+				</div>
+				<div class="foot-right-column">
+					<a href="https://www.linkedin.com/in/jonniewilder/"><img src="portfolio/linkedin-icon.png" alt="Linkedin" height="50" class="icon-right" /></a>
+					<a href="https://www.instagram.com/zipbangwow/"><img src="portfolio/instagram-icon.png" alt="Instagram" height="50" class="icon-right" /></a>
+					<a href="https://www.twitter.com/zipbangwow/"><img src="portfolio/twitter-icon.png" alt="Twitter" height="50" class="icon-right" /></a>
+				</div>
+		</div>
+		
+		</footer>
+
+		<div class="bottom-padding"></div>
+		
+	
+	<script type="text/javascript" src="navigation.js"></script>
+	
+	</body>
+
+</html>
