@@ -2,12 +2,12 @@
 
 body {
 	font-family: 'Chivo', sans-serif;
-  	margin: 0;
+	margin: 0;
 	padding: 0;
 	}
 
 .textured-background {
-    background-image: url("portfolio/noise-background.png");
+  background-image: url("portfolio/noise-background.png");
 	background-color: #FEFEFE;
 	background-repeat: repeat;
 	background-size: 300px;
@@ -34,21 +34,21 @@ img {
 	padding: 1.5em;
 	background-color: #FFF;
 	}
-	
+
 .icon-left, .icon-right {
-	border: none; 
-	float: left; 
-	padding: 0; 
+	border: none;
+	float: left;
+	padding: 0;
 	border-radius: 0;
 	margin: 0;
 	margin-left: 0.25em;
 	margin-right: 0.25em;
 	}
-	
+
 .icon-right {
 	float: right;
 	}
-	
+
 .imgFrame {
 	border-radius: 10px;
 	position: fixed;
@@ -59,7 +59,7 @@ img {
 	z-index: -10;
 	box-shadow: 15px 15px 5px hsla(0, 0%, 0%, 0.75);
 	}
-	
+
 .imgPane {
 	border-radius: 10px;
 	position: relative;
@@ -70,7 +70,7 @@ img {
 	margin: 0 auto;
 	display: none;
 	}
-	
+
 .imgPaneClose {
 	border-radius: 0px;
 	padding: 0em;
@@ -80,29 +80,38 @@ img {
 	display: none;
 	}
 
+div {
+	text-align:center;
+	min-width: 300px;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
 .nav-bar {
 	position: fixed;
+	max-width: none;
 	top: 0;
 	left: 0;
 	right: 0;
 	padding: 0.5em 0 0.5em 0;
 	background-color: hsla(0, 0%, 100%, 0.95);
 	box-shadow: 0px 5px 0px hsla(0, 0%, 0%, 0.05);
-	text-align:center; 
+	text-align:center;
 	margin:0 auto;
 	}
 
 .foot-bar {
 	position: fixed;
+	max-width: none;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	background-color: hsla(0, 0%, 100%, 0.95);
 	box-shadow: 0px -5px 0px hsla(0, 0%, 0%, 0.05);
-	text-align:center; 
+	text-align:center;
 	margin:0 auto;
 	}
-	
+
 .nav-text {
 	color: black;
 	vertical-align: middle;
@@ -130,7 +139,7 @@ img {
 .nav-text-clicked:hover {
 	color: blue;
 	}
-	
+
 p {
 	margin: 0;
 	border: 0;
@@ -152,27 +161,27 @@ p {
 	text-align: left;
 	margin: 0 auto;
 	}
-	
+
 .scrollbox {
 		background-color: white;
 		margin-bottom: 2em;
-		padding: 0; 
+		padding: 0;
 		overflow: visible;
 	}
 
 .codebox {
 	height: 400px;
 	}
-	
+
 pre {
 	font-family: 'Roboto Mono', monospace;
 	font-size: 12pt;
 	background-color: #002500;
 	color: #2bff39;
 	}
-	
+
 .headline, .small-headline {
-	font-family: 'Ultra', sans-serif;	
+	font-family: 'Ultra', sans-serif;
 	font-size: 96pt;
 	line-height: 1em;
 	letter-spacing: -2px;
@@ -188,20 +197,21 @@ pre {
 	padding-left: 1em;
 	margin-bottom: 1em;
 }
-		
+
 .subhead {
 	font-family: 'Lobster', sans-serif;
 	font-weight: 900;
-	font-size: 36pt; 
-	text-align: left; 
+	font-size: 36pt;
+	text-align: left;
 	}
-	
+
 .body-text {
 	font-family: 'Chivo', sans-serif;
 	font-weight: 400;
 	text-align: left;
 	font-size: 14pt;
 	margin-bottom: 1em;
+	min-width: 300px;
 	}
 
 .caption {
@@ -212,7 +222,7 @@ pre {
 	margin: 0 auto;
 	max-width: 450px;
 	}
-	
+
 .bottom-padding {
 	height: 2em;
 	}
@@ -222,18 +232,18 @@ pre {
 .two-column-collapse-wrapper {
 	display: flex;
 }
-	
+
 .left-column {
 	flex: 50%;
 	padding: 1em 0.5em 1em 0.5em;
 	}
-	
+
 .right-column {
 	flex: 50%;
 	padding-top: 1em;
 	padding-bottom: 2em;
 	padding-right: 1em;
-	min-width: 450px;
+	min-width: 300px;
 	max-width: 450px;
 	align-self: flex-end;
 	}
@@ -241,64 +251,64 @@ pre {
 .three-column-collapse-wrapper {
 	display: flex;
 	}
-	
+
 .moons {
 	font-size: 30pt;
 	}
-	
+
 .foot-bar {
 	display: flex;
 	}
-	
+
 .foot-left-column {
 	padding: 0.5em;
-	flex: 25%;	
+	flex: 25%;
 	}
-	
+
 .foot-center-column {
 	padding: 0.5em;
 	flex: 50%;
 	}
-	
+
 .foot-right-column {
 	padding: 0.5em;
-	flex: 25%;	
+	flex: 25%;
 	}
 
 
 /* Make a nice scrollbar for webkit browsers */
-	
+
 ::-webkit-scrollbar {
 	  width: 20px;
 	  height: 0px;
 	}
 ::-webkit-scrollbar-track {
-	  background: #f1f1f1; 
+	  background: #f1f1f1;
 	}
 ::-webkit-scrollbar-thumb {
-	  background: #888; 
+	  background: #888;
 	  border-radius: 10px;
 	}
 ::-webkit-scrollbar-thumb:hover {
-	  background: #555; 
+	  background: #555;
 	}
-	
+
 
 
 /* Responsive layout - when the screen is less than max-width wide, make the columns stack on top of each other instead of next to each other */
 
-@media only screen and (max-width: 479px) { 
+@media only screen and (max-width: 479px) {
 
-    .nav-text {   
-  		font-size: 8pt;
-    	}
-    .nav-text-clicked {
-  		font-size: 10pt;
-    	}
+  .nav-text {
+		font-size: 8pt;
+  	}
+  .nav-text-clicked {
+		font-size: 10pt;
+  	}
 	.headline {
 		font-size: 48pt;
 		}
-    .two-column-collapse-wrapper {   
+  .two-column-collapse-wrapper {
 		flex-direction: column;
 		}
 	.subhead {
@@ -323,18 +333,18 @@ pre {
 		}
 	}
 
-@media only screen and (min-width: 480px) and (max-width: 768px) { 
+@media only screen and (min-width: 480px) and (max-width: 768px) {
 
-	.nav-text {   
+	.nav-text {
   		font-size: 12pt;
 		}
     .nav-text-clicked {
 		font-size: 16pt;
-		}	
+		}
 	.headline {
 		font-size: 72pt;
 		}
-    .two-column-collapse-wrapper {   
+    .two-column-collapse-wrapper {
 		flex-direction: column;
 		}
 	.left-column {
@@ -346,8 +356,8 @@ pre {
 		}
 	}
 
-@media only screen and (min-width: 768px) and (max-width: 1281px) { 
-    .nav-text {   
+@media only screen and (min-width: 768px) and (max-width: 1281px) {
+    .nav-text {
 		font-size: 16pt;
 		}
     .nav-text-clicked {
@@ -362,7 +372,7 @@ pre {
 		}
 	}
 
-@media only screen and (min-width: 1282px) and (max-width: 2100px) { 
+@media only screen and (min-width: 1282px) and (max-width: 2100px) {
 	.left-column {
 		text-align: right;
 		margin: 0 auto;
