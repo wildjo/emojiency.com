@@ -258,23 +258,25 @@ pre {
 
 .foot-bar {
 	display: flex;
+	flex-direction: row;
 	}
 
 .foot-left-column {
-	padding: 0.5em;
 	flex: 25%;
+	min-width: 125px;
+	padding: 0.5em;
 	}
 
 .foot-center-column {
+	min-width: 100px;
 	padding: 0.5em;
-	flex: 50%;
 	}
 
 .foot-right-column {
-	padding: 0.5em;
 	flex: 25%;
+	min-width: 250px;
+	padding: 0.5em;
 	}
-
 
 /* Make a nice scrollbar for webkit browsers */
 
@@ -324,9 +326,6 @@ pre {
 		}
 	.foot-center-column {
 		display: none;
-		margin: 0;
-		padding: 0;
-		background-color: yellow;
 		}
 	.moons {
 		font-size: 24pt;
@@ -336,7 +335,7 @@ pre {
 @media only screen and (min-width: 480px) and (max-width: 768px) {
 
 	.nav-text {
-  		font-size: 12pt;
+  	font-size: 12pt;
 		}
     .nav-text-clicked {
 		font-size: 16pt;
@@ -344,7 +343,7 @@ pre {
 	.headline {
 		font-size: 72pt;
 		}
-    .two-column-collapse-wrapper {
+  .two-column-collapse-wrapper {
 		flex-direction: column;
 		}
 	.left-column {
@@ -357,10 +356,10 @@ pre {
 	}
 
 @media only screen and (min-width: 768px) and (max-width: 1281px) {
-    .nav-text {
+  .nav-text {
 		font-size: 16pt;
 		}
-    .nav-text-clicked {
+  .nav-text-clicked {
 		font-size: 24pt;
 		}
 	.headline {
