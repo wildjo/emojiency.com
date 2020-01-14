@@ -4,6 +4,6 @@
 HTML/CSS/JavaScript code
 
 
-code is Apache License 2.0
+Code is Apache License 2.0
 
-images are  &#169;2020 Jonnie Wilder
+Media is &#169;2020 Jonnie Wilder
