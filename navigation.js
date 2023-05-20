@@ -201,12 +201,98 @@ function closeImage() {
 		enlargedImageShown = false;
 		}
 	}
-	
+
+
+// Hello, this is Bing. I can help you with rewriting your javascript code.😊
+// Here is a possible way to rewrite your function to show a full-screen image that can be either square or rectangular, landscape or portrait, and have a close box in the upper right corner with some margin:
+
+function initModal() {
+  // Get the modal container
+  var modalContainer = document.getElementById("myModal");
+
+  // Get the images and insert them inside the modal
+  var img = document.querySelectorAll('#pane');
+  var modalImg = document.createElement("img");
+  var captionText = document.createElement("alt");
+  modalImg.className = "modal-content";
+  captionText.className = "modal-caption";
+
+  for (var i = 0; i < img.length; i++) {
+	img[i].onclick = function () {
+	  modalContainer.style.display = "block";
+	  modalImg.src = this.getAttribute("src") || "default-image.jpg";
+	  captionText.innerHTML = this.getAttribute("alt");
+	  modalContainer.appendChild(modalImg);
+	  modalContainer.appendChild(captionText);
+	};
+  }
+
+  // Get the close button
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+  closeButton.onclick = function () {
+	modalContainer.style.display = "none";
+	modalContainer.removeChild(modalImg);
+	modalContainer.removeChild(captionText);
+  };
+  modalContainer.appendChild(closeButton);
+}
+
+// Call the initModal function when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initModal);
+
+
+function showLargerImageDUD(image) {
+}
+
+function showLargerImageDUD(image) {
+  var myImage = document.getElementById("pane");
+  var paneClose = document.getElementById("paneClose");
+  var imgFrame = document.getElementById("imgFrame");
+
+  myImage.src = image;
+
+  function setCenter(whichDiv) {
+	var newX = (window.innerWidth - whichDiv.clientWidth) / 2;
+	var newY = (window.innerHeight - whichDiv.clientHeight) / 2;
+	whichDiv.style.left = newX + "px";
+	whichDiv.style.top = newY + "px";
+  }
+
+  if (enlargedImageShown) {
+	myImage.style.display = "none";
+	myImage.style.zIndex = "-10";
+	paneClose.style.display = "none";
+	paneClose.style.zIndex = "-10";
+	imgFrame.style.display = "none";
+	imgFrame.style.zIndex = "-10";
+	enlargedImageShown = false;
+  } else {
+	myImage.style.display = "block";
+	myImage.style.zIndex = "10";
+	imgFrame.style.display = "block";
+	imgFrame.style.zIndex = "10";
+	paneClose.style.display = "block";
+	paneClose.style.zIndex = "10";
+	setCenter(imgFrame);
+
+	// Add an event listener to update the position of the imgFrame when the window is resized
+	window.addEventListener('resize', function() {
+	  setCenter(imgFrame);
+	});
+
+	enlargedImageShown = true;
+  }
+}
+
+
+
 // On the page, the original file is shrunk down to 350px wide so it fits in the column
 // But when the user clicks on an image, we show the full-sized image (up to about 90% of the window size, defined in the css)
 // This is a toggle, based on a global variable. If it's shown, we close it. If it's not shown, we show it.
 	
-function showLargerImage(image) {
+function showLargerImageOLD(image) {
 
 	myImage = document.getElementById("pane");
 		
