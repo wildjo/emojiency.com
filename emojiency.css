@@ -31,6 +31,13 @@ h3 {
   margin-bottom: 0.5rem;
 }
 
+h4 {
+  font-family: 'Rye', serif;
+  font-size: 3.5rem;
+  margin-top: .5rem;
+  margin-bottom: 0;
+}
+
 .tagline {
   font-family: 'Maiden Orange', serif;
   line-height: 1.4;
@@ -110,7 +117,7 @@ svg text {
 }
 
 .centered-headshot {
-  transform: rotate(-5deg);
+  transform: rotate(5deg);
   transform-origin: center;
   clip-path: circle(50%);
 }
