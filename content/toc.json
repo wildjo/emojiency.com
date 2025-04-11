@@ -1,0 +1,10 @@
+{
+  "categories": {
+    "Artwork": [
+      { "id": "enlightenment", "title": "Enlightenment" }
+    ],
+    "Code Projects": [
+      { "id": "chroniquill", "title": "ChroniQuill" }
+    ]
+  }
+}
