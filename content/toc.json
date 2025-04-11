@@ -1,10 +1,18 @@
 {
   "categories": {
     "Artwork": [
-      { "id": "enlightenment", "title": "Enlightenment" }
+      "chimera-illo.json",
+      "credit-card-flower.json",
+      "enlightenment.json"
     ],
-    "Code Projects": [
-      { "id": "chroniquill", "title": "ChroniQuill" }
+    "Audio": [
+      "ffs-russian-bot-farm-interstitial.json"
+    ],
+    "Video": [
+      "herohouselogoanim.json"
+    ],
+    "Code": [
+      {"title": "ChroniQuill", "link": "https://github.com/wildjo/chroniquill/"}
     ]
   }
 }

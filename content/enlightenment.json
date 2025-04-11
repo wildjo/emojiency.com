@@ -1,5 +1,8 @@
 {
   "title": "Enlightenment",
-  "image": "enlightenment.png",
-  "description": "Johanna produces striking digital graphics with vibrant emotional narratives."
+  "description": "Johanna produces striking digital graphics with vibrant emotional narratives. Magazine cover for an upcoming issue of Floating.point.",
+	"alt": "image of robot monk meditating on rainbow wave background",
+	"media": "Digital, Affinity Designer",
+  "file": "enlightenment.png",
+  "type": "image"
 }
