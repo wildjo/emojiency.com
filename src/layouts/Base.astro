@@ -1,0 +1,150 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Emojiency', description = 'Fiction, autobiography, and all the gooey stuff in the middle.' } = Astro.props;
+
+const path = Astro.url.pathname;
+const activeSection = path.startsWith('/articles') ? 'articles'
+  : path.startsWith('/menu') ? 'menu'
+  : 'news';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+</head>
+<body>
+
+  <header class="site-header">
+    <button class={`header-hamburger ${activeSection === 'menu' ? 'active' : ''}`} aria-label="Menu" onclick="window.location.href='/menu/'">&#9776;</button>
+    <a class={`header-articles ${activeSection === 'articles' ? 'active' : ''}`} href="/articles/">articles</a>
+    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href="/">news</a>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <span>copyleft <img src="/images/copyleft.svg" alt="copyleft" class="copyleft-icon" /> 2026 Johanna ‘Jonnie’ Wilder</span>
+    <div class="footer-links">
+      <a href="https://youtube.com/ezipbangwow" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://github.com/wildjo/emojiency" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-panel">
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+      <div class="lightbox-controls">
+        <button class="lightbox-nav" id="lightbox-prev" type="button" aria-label="Previous image">&#8592;</button>
+        <button class="lightbox-nav" id="lightbox-next" type="button" aria-label="Next image">&#8594;</button>
+      </div>
+      <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const lightboxState = {
+      images: [],
+      index: 0,
+    };
+
+    function renderLightbox() {
+      const overlay = document.getElementById('lightbox');
+      const image = lightboxState.images[lightboxState.index];
+      if (!overlay || !image) return;
+
+      document.getElementById('lightbox-img').src = image.src;
+      document.getElementById('lightbox-img').alt = image.caption || '';
+      document.getElementById('lightbox-caption').textContent = image.caption || '';
+
+      const thumbnails = document.getElementById('lightbox-thumbnails');
+      thumbnails.innerHTML = '';
+      lightboxState.images.forEach((item, idx) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `lightbox-thumbnail ${idx === lightboxState.index ? 'active' : ''}`;
+        button.setAttribute('aria-label', `Show image ${idx + 1}`);
+
+        const thumb = document.createElement('img');
+        thumb.src = item.src;
+        thumb.alt = item.caption || '';
+        button.appendChild(thumb);
+
+        button.addEventListener('click', (event) => {
+          event.stopPropagation();
+          lightboxState.index = idx;
+          renderLightbox();
+        });
+
+        thumbnails.appendChild(button);
+      });
+
+      overlay.classList.add('active');
+    }
+
+    function openLightboxGallery(images, index = 0) {
+      lightboxState.images = images;
+      lightboxState.index = index;
+      renderLightbox();
+    }
+
+    function openLightbox(src, caption) {
+      openLightboxGallery([{ src, caption }], 0);
+    }
+
+    function showPreviousLightboxImage() {
+      if (!lightboxState.images.length) return;
+      lightboxState.index = (lightboxState.index - 1 + lightboxState.images.length) % lightboxState.images.length;
+      renderLightbox();
+    }
+
+    function showNextLightboxImage() {
+      if (!lightboxState.images.length) return;
+      lightboxState.index = (lightboxState.index + 1) % lightboxState.images.length;
+      renderLightbox();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    document.getElementById('lightbox').addEventListener('click', (event) => {
+      if (event.target.id === 'lightbox') closeLightbox();
+    });
+
+    document.getElementById('lightbox-prev').addEventListener('click', (event) => {
+      event.stopPropagation();
+      showPreviousLightboxImage();
+    });
+
+    document.getElementById('lightbox-next').addEventListener('click', (event) => {
+      event.stopPropagation();
+      showNextLightboxImage();
+    });
+
+    window.openLightbox = openLightbox;
+    window.openLightboxGallery = openLightboxGallery;
+    window.closeLightbox = closeLightbox;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (!document.getElementById('lightbox').classList.contains('active')) return;
+      if (e.key === 'ArrowLeft') showPreviousLightboxImage();
+      if (e.key === 'ArrowRight') showNextLightboxImage();
+    });
+  </script>
+
+</body>
+</html>

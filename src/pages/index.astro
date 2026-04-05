@@ -1,0 +1,275 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const allNews = (await getCollection('news'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 20);
+
+const manifestPath = path.resolve('public/images/splash/splashes.json');
+let splashes: any[] = [];
+try {
+  splashes = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+} catch {}
+
+const newsWithRendered = await Promise.all(
+  allNews.map(async (post) => {
+    const { Content } = await render(post);
+    return { ...post, Content };
+  })
+);
+---
+
+<Base title="Emojiency">
+  <div class="content-area">
+    <div class="content-splash" id="splash-container">
+      <div id="splash-fallback" style="text-align: center;">
+        <div style="font-size: 48px; font-weight: 500; letter-spacing: -1px;">
+          <em>emo</em><span style="font-family: monospace; font-weight: 700;">ji</span><em>e</em><em>ncy</em>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 12px; font-family: var(--font-ui);">
+          fiction, autobiography, and all the gooey stuff in the middle
+        </p>
+      </div>
+      <img id="splash-image" class="splash-bouncer" alt="Emojiency" />
+    </div>
+
+    <div class="content-news-feed">
+      {newsWithRendered.map(post => (
+        <article class="news-post">
+          {post.data.title && <h3 class="news-post-title">{post.data.title}</h3>}
+
+          {post.data.images && post.data.images.length === 1 && (
+            <img class="news-post-image"
+              src={`/images/news/${post.data.images[0].src}`}
+              alt={post.data.images[0].caption || ''}
+              data-lightbox-src={`/images/news/${post.data.images[0].src}`}
+              data-lightbox-caption={post.data.images[0].caption || ''}
+            />
+          )}
+
+          {post.data.images && post.data.images.length > 1 && (
+            <div
+              class="slideshow"
+              data-slideshow
+              data-images={JSON.stringify(post.data.images.map((img) => ({
+                src: `/images/news/${img.src}`,
+                caption: img.caption || '',
+              })))}
+            >
+              <div class="slideshow-track">
+                {post.data.images.map((img, index) => (
+                  <img
+                    src={`/images/news/${img.src}`}
+                    alt={img.caption || ''}
+                    data-slide-image
+                    data-slide-index={index}
+                  />
+                ))}
+              </div>
+              <div class="slideshow-dots">
+                {post.data.images.map((_, i) => (
+                  <button class={`slideshow-dot ${i === 0 ? 'active' : ''}`} data-slide={i} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div class="news-post-text"><post.Content /></div>
+
+          {post.data.link && (
+            <div class="news-post-text">
+              <a href={post.data.link} target="_blank" rel="noopener">{new URL(post.data.link).hostname}</a>
+            </div>
+          )}
+
+          <div class="news-post-date">
+            {post.data.date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+  <script type="application/json" id="splash-data" set:html={JSON.stringify(splashes)} />
+</Base>
+
+<script is:inline>
+  document.querySelectorAll('[data-lightbox-src]').forEach((image) => {
+    image.addEventListener('click', () => {
+      window.openLightbox(image.dataset.lightboxSrc, image.dataset.lightboxCaption || '');
+    });
+  });
+
+  document.querySelectorAll('[data-slideshow]').forEach(show => {
+    const images = JSON.parse(show.dataset.images || '[]');
+    const track = show.querySelector('.slideshow-track');
+    const dots = show.querySelectorAll('.slideshow-dot');
+    const slides = show.querySelectorAll('[data-slide-image]');
+    let currentIndex = 0;
+    let intervalId;
+
+    const updateSlide = (idx) => {
+      currentIndex = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach(d => d.classList.remove('active'));
+      dots[idx].classList.add('active');
+    };
+
+    const restartInterval = () => {
+      window.clearInterval(intervalId);
+      intervalId = window.setInterval(() => {
+        updateSlide((currentIndex + 1) % slides.length);
+      }, 5000);
+    };
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.dataset.slide);
+        updateSlide(idx);
+        restartInterval();
+      });
+    });
+
+    slides.forEach((slide) => {
+      slide.addEventListener('click', () => {
+        window.openLightboxGallery(images, parseInt(slide.dataset.slideIndex));
+      });
+    });
+
+    updateSlide(0);
+    restartInterval();
+  });
+
+  // --- Splash screen: DVD-bounce logic ---
+  (function () {
+    const splashes = JSON.parse(document.getElementById('splash-data').textContent);
+    const container = document.getElementById('splash-container');
+    const fallback = document.getElementById('splash-fallback');
+    const img = document.getElementById('splash-image');
+    if (!splashes.length || !container || !img) return;
+
+    // Context matching
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const weekday = now.getDay();
+    const mmdd = String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+
+    function getSeason(m) {
+      if (m >= 3 && m <= 5) return 'spring';
+      if (m >= 6 && m <= 8) return 'summer';
+      if (m >= 9 && m <= 11) return 'fall';
+      return 'winter';
+    }
+    const season = getSeason(month);
+
+    function matchesContext(ctx) {
+      if (!ctx || ctx.always) return true;
+      if (ctx.dates && ctx.dates.includes(mmdd)) return true;
+      if (ctx.months && ctx.months.includes(month)) return true;
+      if (ctx.weekdays && ctx.weekdays.includes(weekday)) return true;
+      if (ctx.seasons && ctx.seasons.includes(season)) return true;
+      return false;
+    }
+
+    const eligible = splashes.filter(function (s) { return matchesContext(s.context); });
+    if (!eligible.length) return;
+
+    const chosen = eligible[Math.floor(Math.random() * eligible.length)];
+    fallback.style.display = 'none';
+    img.src = '/images/splash/' + chosen.image;
+    img.style.display = 'block';
+
+    var scale = chosen.scale || 0.4;
+    var rotateDeg = chosen.rotate || 0;
+    if (rotateDeg) {
+      img.style.transform = 'rotate(' + rotateDeg + 'deg)';
+    }
+
+    img.onload = function () {
+      var pad = 24;
+      var cw = container.clientWidth;
+      var ch = container.clientHeight;
+      var naturalW = img.naturalWidth;
+      var naturalH = img.naturalHeight;
+
+      // Size the image to scale fraction of the container width
+      var drawW = cw * scale;
+      var drawH = (naturalH / naturalW) * drawW;
+
+      // For rotated images, the bounding box swaps
+      var boundW, boundH;
+      if (rotateDeg === 90 || rotateDeg === 270) {
+        boundW = drawH;
+        boundH = drawW;
+      } else {
+        boundW = drawW;
+        boundH = drawH;
+      }
+
+      // If the bounding box is too tall, shrink to fit
+      if (boundH > ch - pad * 2) {
+        var shrink = (ch - pad * 2) / boundH;
+        drawW *= shrink;
+        drawH *= shrink;
+        boundW = rotateDeg === 90 || rotateDeg === 270 ? drawH : drawW;
+        boundH = rotateDeg === 90 || rotateDeg === 270 ? drawW : drawH;
+      }
+
+      img.style.width = drawW + 'px';
+      img.style.height = drawH + 'px';
+      img.style.position = 'absolute';
+
+      container.style.position = 'relative';
+      container.style.overflow = 'hidden';
+
+      // Available bounce area
+      var areaW = cw - boundW - pad * 2;
+      var areaH = ch - boundH - pad * 2;
+      if (areaW < 0) areaW = 0;
+      if (areaH < 0) areaH = 0;
+
+      // Starting position (random within bounds)
+      var x = Math.random() * areaW;
+      var y = Math.random() * areaH;
+
+      // Velocity: pixels per frame at 60fps, slow and dreamy
+      var speed = 0.7;
+      var angle = Math.random() * 2 * Math.PI;
+      var vx = Math.cos(angle) * speed;
+      var vy = Math.sin(angle) * speed;
+
+      // Click to randomize speed and direction
+      img.addEventListener('click', function () {
+        var newSpeed = 0.4 + Math.random() * 1.6;
+        var newAngle = Math.random() * 2 * Math.PI;
+        vx = Math.cos(newAngle) * newSpeed;
+        vy = Math.sin(newAngle) * newSpeed;
+      });
+
+      // Offset to center the rotated image's bounding box
+      var offsetX = (boundW - drawW) / 2;
+      var offsetY = (boundH - drawH) / 2;
+
+      function frame() {
+        x += vx;
+        y += vy;
+
+        if (x <= 0) { x = 0; vx = Math.abs(vx); }
+        if (x >= areaW) { x = areaW; vx = -Math.abs(vx); }
+        if (y <= 0) { y = 0; vy = Math.abs(vy); }
+        if (y >= areaH) { y = areaH; vy = -Math.abs(vy); }
+
+        img.style.left = (pad + x + offsetX) + 'px';
+        img.style.top = (pad + y + offsetY) + 'px';
+
+        requestAnimationFrame(frame);
+      }
+
+      requestAnimationFrame(frame);
+    };
+  })();
+</script>
