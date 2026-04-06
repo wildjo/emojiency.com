@@ -21,6 +21,8 @@ const newsWithRendered = await Promise.all(
     return { ...post, Content };
   })
 );
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base title="Emojiency">
@@ -44,9 +46,9 @@ const newsWithRendered = await Promise.all(
 
           {post.data.images && post.data.images.length === 1 && (
             <img class="news-post-image"
-              src={`/images/news/${post.data.images[0].src}`}
+              src={`${base}/images/news/${post.data.images[0].src}`}
               alt={post.data.images[0].caption || ''}
-              data-lightbox-src={`/images/news/${post.data.images[0].src}`}
+              data-lightbox-src={`${base}/images/news/${post.data.images[0].src}`}
               data-lightbox-caption={post.data.images[0].caption || ''}
             />
           )}
@@ -56,14 +58,14 @@ const newsWithRendered = await Promise.all(
               class="slideshow"
               data-slideshow
               data-images={JSON.stringify(post.data.images.map((img) => ({
-                src: `/images/news/${img.src}`,
+                src: `${base}/images/news/${img.src}`,
                 caption: img.caption || '',
               })))}
             >
               <div class="slideshow-track">
                 {post.data.images.map((img, index) => (
                   <img
-                    src={`/images/news/${img.src}`}
+                    src={`${base}/images/news/${img.src}`}
                     alt={img.caption || ''}
                     data-slide-image
                     data-slide-index={index}
@@ -94,6 +96,7 @@ const newsWithRendered = await Promise.all(
     </div>
   </div>
   <script type="application/json" id="splash-data" set:html={JSON.stringify(splashes)} />
+  <meta id="base-url" content={base} />
 </Base>
 
 <script is:inline>
@@ -180,7 +183,8 @@ const newsWithRendered = await Promise.all(
 
     const chosen = eligible[Math.floor(Math.random() * eligible.length)];
     fallback.style.display = 'none';
-    img.src = '/images/splash/' + chosen.image;
+    var baseUrl = document.getElementById('base-url').content;
+    img.src = baseUrl + '/images/splash/' + chosen.image;
     img.style.display = 'block';
 
     var scale = chosen.scale || 0.4;

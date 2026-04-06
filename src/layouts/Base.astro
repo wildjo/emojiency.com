@@ -8,9 +8,10 @@ interface Props {
 
 const { title = 'Emojiency', description = 'Fiction, autobiography, and all the gooey stuff in the middle.' } = Astro.props;
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const path = Astro.url.pathname;
-const activeSection = path.startsWith('/articles') ? 'articles'
-  : path.startsWith('/menu') ? 'menu'
+const activeSection = path.startsWith(base + '/articles') ? 'articles'
+  : path.startsWith(base + '/menu') ? 'menu'
   : 'news';
 ---
 
@@ -25,9 +26,9 @@ const activeSection = path.startsWith('/articles') ? 'articles'
 <body>
 
   <header class="site-header">
-    <button class={`header-hamburger ${activeSection === 'menu' ? 'active' : ''}`} aria-label="Menu" onclick="window.location.href='/menu/'">&#9776;</button>
-    <a class={`header-articles ${activeSection === 'articles' ? 'active' : ''}`} href="/articles/">articles</a>
-    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href="/">news</a>
+    <button class={`header-hamburger ${activeSection === 'menu' ? 'active' : ''}`} aria-label="Menu" onclick={`window.location.href='${base}/menu/'`}>&#9776;</button>
+    <a class={`header-articles ${activeSection === 'articles' ? 'active' : ''}`} href={`${base}/articles/`}>articles</a>
+    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href={`${base}/`}>news</a>
   </header>
 
   <main>
@@ -35,7 +36,7 @@ const activeSection = path.startsWith('/articles') ? 'articles'
   </main>
 
   <footer class="site-footer">
-    <span>copyleft <img src="/images/copyleft.svg" alt="copyleft" class="copyleft-icon" /> 2026 Johanna ‘Jonnie’ Wilder</span>
+    <span>copyleft <img src={`${base}/images/copyleft.svg`} alt="copyleft" class="copyleft-icon" /> 2026 Johanna ‘Jonnie’ Wilder</span>
     <div class="footer-links">
       <a href="https://youtube.com/ezipbangwow" target="_blank" rel="noopener">YouTube</a>
       <a href="https://github.com/wildjo/emojiency" target="_blank" rel="noopener">GitHub</a>

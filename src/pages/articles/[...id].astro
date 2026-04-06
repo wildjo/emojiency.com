@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base title={`${article.data.title} — Emojiency`}>
@@ -27,9 +28,9 @@ const { Content } = await render(article);
       {article.data.hero && (
         <img
           class="article-hero"
-          src={`/images/articles/${article.data.hero}`}
+          src={`${base}/images/articles/${article.data.hero}`}
           alt={article.data.heroCaption || article.data.title}
-          onclick={`openLightbox('/images/articles/${article.data.hero}', '${(article.data.heroCaption || '').replace(/'/g, "\\'")}')`}
+          onclick={`openLightbox('${base}/images/articles/${article.data.hero}', '${(article.data.heroCaption || '').replace(/'/g, "\\'")}')`}
         />
       )}
 

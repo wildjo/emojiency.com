@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://www.emojiency.com',
+  site: 'https://wildjo.github.io',
+  base: '/emojiency.com',
   output: 'static',
 });
