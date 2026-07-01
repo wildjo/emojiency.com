@@ -1,0 +1,20 @@
+[
+  {
+    "id": "emojiency-horizontal",
+    "image": "emojiency-splash.png",
+    "rotate": 0,
+    "scale": 0.75,
+    "context": {
+      "always": true
+    }
+  },
+  {
+    "id": "emojiency-vertical",
+    "image": "emojiency-splash.png",
+    "rotate": 90,
+    "scale": 0.75,
+    "context": {
+      "always": true
+    }
+  }
+]

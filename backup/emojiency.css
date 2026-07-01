@@ -1,0 +1,438 @@
+
+
+body {
+	font-family: 'Chivo', sans-serif;
+	margin: 0;
+	padding: 0;
+	}
+
+.textured-background {
+  background-image: url("portfolio/noise-background.png");
+	background-color: #FEFEFE;
+	background-repeat: repeat;
+	background-size: 300px;
+	}
+
+.content {
+	transition: opacity 1.5s ease-in-out;
+	display: block;
+	height: auto;
+	overflow: visible;
+	opacity: 1;
+	}
+
+.content-hidden {
+	transition: opacity 1.5s ease-in-out;
+	height: 0;
+	overflow: hidden;
+	opacity: 0;
+	}
+
+img {
+	border-radius: 10px;
+	border: solid;
+	padding: 1.5em;
+	background-color: #FFF;
+	}
+
+.icon-left, .icon-right {
+	border: none;
+	float: left;
+	padding: 0;
+	border-radius: 0;
+	margin: 0;
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+	}
+
+.icon-right {
+	float: right;
+	}
+	
+/* The Modal (background) */
+.modal {
+  margin: 0 auto;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+/* The Modal content center the image horizontally and make the modal take up the whole browser window, */
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-height: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+	/* The Close Button */
+.close {
+	  position: absolute;
+	  top: 15px;
+	  right: 25px;
+	  color: #f1f1f1;
+	  font-size: 40px;
+	  font-weight: bold;
+	  transition: 0.3s;
+	}
+	
+	
+.close:hover,
+.close:focus {
+	  color: #bbb;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+
+.imgFrame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 90%;
+  max-height: 90%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 15px 15px 5px hsla(0, 0%, 0%, 0.75);
+  background-color: white;
+}
+		
+#pane {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+}
+	
+.imgPaneClose {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 2px 6px;
+  cursor: pointer;
+  display: block;
+	}
+		
+div {
+	text-align:center;
+	margin: 0 auto;
+}
+
+.nav-bar {
+	position: fixed;
+	max-width: none;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 0.5em 0 0.5em 0;
+	background-color: hsla(0, 0%, 100%, 0.95);
+	box-shadow: 0px 5px 0px hsla(0, 0%, 0%, 0.05);
+	text-align:center;
+	margin:0 auto;
+	}
+
+.foot-bar {
+	position: fixed;
+	max-width: none;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: hsla(0, 0%, 100%, 0.95);
+	box-shadow: 0px -5px 0px hsla(0, 0%, 0%, 0.05);
+	text-align:center;
+	margin:0 auto;
+	}
+
+.nav-text {
+	color: black;
+	vertical-align: middle;
+	text-align: center;
+	font-family: 'Chivo', sans-serif;
+	font-size: 18pt;
+	font-weight: 300;
+	max-width: 450px;
+	margin: 0 auto;
+	}
+
+.nav-text:hover {
+	color: blue;
+	background-color: inherit;
+	font-weight: 900;
+	}
+
+.nav-text-clicked {
+	color: blue;
+	vertical-align: middle;
+	font-size: 28pt;
+	font-weight: 900;
+	}
+
+.nav-text-clicked:hover {
+	color: blue;
+	}
+
+p {
+	margin: 0;
+	border: 0;
+	margin-bottom: 0.5em;
+	}
+
+.scrollbox, .codebox {
+	overflow: scroll;
+	padding: 0;
+	width: 80%;
+	min-width: 300px;
+	max-width: 900px;
+	height: 500px;
+	border-style: solid;
+	border-width: 4px;
+	border-radius: 5px;
+	border-color: hsla(0, 100%, 0%, 0.7);
+	background-color: #002500;
+	text-align: left;
+	margin: 0 auto;
+	}
+
+.scrollbox {
+		background-color: white;
+		margin-bottom: 2em;
+		padding: 0;
+		overflow: visible;
+	}
+
+.codebox {
+	height: 400px;
+	}
+
+pre {
+	font-family: 'Roboto Mono', monospace;
+	font-size: 12pt;
+	background-color: #002500;
+	color: #2bff39;
+	}
+
+.headline, .small-headline {
+	font-family: 'Ultra', sans-serif;
+	font-size: 96pt;
+	line-height: 1em;
+	letter-spacing: -2px;
+	font-kerning: normal;
+	}
+
+.small-headline {
+	text-align: left;
+	font-size: 36pt;
+	line-height: 1em;
+	letter-spacing: 0px;
+	text-indent: -0.55em;
+	padding-left: 1em;
+	margin-bottom: 1em;
+}
+
+.subhead {
+	font-family: 'Lobster', sans-serif;
+	font-weight: 900;
+	font-size: 36pt;
+	text-align: left;
+	}
+
+.body-text {
+	font-family: 'Chivo', sans-serif;
+	font-weight: 400;
+	text-align: left;
+	font-size: 14pt;
+	margin-bottom: 1em;
+	min-width: 300px;
+	}
+
+.caption {
+	text-align: center;
+	font-family: 'Chivo', sans-serif;
+	font-size: 18pt;
+	font-weight: 300;
+	margin: 0 auto;
+	max-width: 450px;
+	color: white;
+	}
+
+.bottom-padding {
+	height: 2em;
+	}
+
+/* Flexbox hierarchy */
+
+.two-column-collapse-wrapper {
+	display: flex;
+}
+
+.left-column {
+	flex: 50%;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-right: 2em;
+	padding-left: 2em;
+	text-align: right;
+	align-self: flex-end;
+	}
+	
+.left-column-menu { 
+	flex: 50%;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-right: 2em;
+	padding-left: 2em;
+	text-align: right;
+	align-self: flex-start;
+}
+
+.right-column {
+	flex: 50%;
+	padding-top: 1em;
+	padding-bottom: 2em;
+	padding-right: 2em;
+	padding-left: 2em;
+	text-align: left;
+	align-self: flex-end;
+	}
+
+.three-column-collapse-wrapper {
+	display: flex;
+	}
+
+.moons {
+	font-size: 30pt;
+	}
+
+.foot-bar {
+	display: flex;
+	flex-direction: row;
+	}
+
+.foot-left-column {
+	flex: 25%;
+	min-width: 150px;
+	padding: 0.5em;
+	}
+
+.foot-center-column {
+	min-width: 0px;
+	padding: 0.5em;
+	}
+
+.foot-right-column {
+	flex: 25%;
+	min-width: 300px;
+	padding: 0.5em;
+	}
+
+/* Make a nice scrollbar for webkit browsers */
+
+::-webkit-scrollbar {
+	  width: 20px;
+	  height: 0px;
+	}
+::-webkit-scrollbar-track {
+	  background: #f1f1f1;
+	}
+::-webkit-scrollbar-thumb {
+	  background: #888;
+	  border-radius: 10px;
+	}
+::-webkit-scrollbar-thumb:hover {
+	  background: #555;
+	}
+
+
+
+/* Responsive layout - when the screen is less than max-width wide, make the columns stack on top of each other instead of next to each other */
+
+@media only screen and (max-width: 479px) {
+
+  .nav-text {
+		font-size: 8pt;
+	  }
+  .nav-text-clicked {
+		font-size: 10pt;
+	  }
+	.headline {
+		font-size: 48pt;
+		}
+  .two-column-collapse-wrapper {
+		flex-direction: column;
+		}
+	.subhead {
+		font-size: 24pt;
+		}
+	.left-column {
+		margin: 0 auto;
+		}
+	.right-column {
+		padding-left: 1em;
+		padding-right: 1em;
+		}
+	.foot-center-column {
+		display: none;
+		}
+	.moons {
+		font-size: 24pt;
+		}
+	}
+
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+
+	.nav-text {
+	  font-size: 12pt;
+		}
+	.nav-text-clicked {
+		font-size: 16pt;
+		}
+	.headline {
+		font-size: 72pt;
+		}
+  .two-column-collapse-wrapper {
+		flex-direction: column;
+		}
+	.left-column {
+		margin: 0 auto;
+		}
+	.foot-center-column {
+		display: none;
+		}
+	}
+
+@media only screen and (min-width: 768px) and (max-width: 1281px) {
+  .nav-text {
+		font-size: 16pt;
+		}
+  .nav-text-clicked {
+		font-size: 24pt;
+		}
+	.headline {
+		font-size: 96pt;
+		}
+	.left-column {
+		margin: 0 auto;
+		}
+	}
+
+@media only screen and (min-width: 1282px) and (max-width: 2100px) {
+	.left-column {
+		margin: 0 auto;
+		}
+	}

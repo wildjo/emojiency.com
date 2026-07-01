@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flipbook Prototype</title>
+  <link href="emojiency.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ultra&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Chivo:300,300i,400,400i,700,700i,900,900i&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Maiden+Orange&display=swap" rel="stylesheet">	
+</head>
+
+<style>
+/* === Base Typography === */
+body {
+  margin: 0;
+  background: #f9f3e4;
+  color: #3c2c1e;
+  font-family: 'EB Garamond', 'Ultra', serif;
+  text-align: center;
+}
+
+/* === Display Type (Cover & Global Branding) === */
+h2, h4, .tagline strong {
+  font-family: 'Rye', serif;
+}
+h3 {
+  font-family: 'Lobster', serif;
+}
+.tagline {
+  font-family: 'Maiden Orange', serif;
+  line-height: 1.4;
+  margin: 0.5rem 0;
+}
+h1.tagline {
+  margin-top: 1rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+}
+h2.tagline {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.4rem;
+}
+.tagline strong {
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* === Flipbook Content === */
+.right-page p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.right-page h3 {
+  font-family: 'Lobster', serif;
+  font-size: 2rem;
+  margin: 0.5rem 0 1rem;
+}
+.right-page .media-type {
+  font-family: 'Maiden Orange', serif;
+  font-size: 1.2rem;
+  margin-top: -0.5rem;
+  color: #5a4632;
+}
+
+/* === UI & Buttons === */
+.buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.buttons a {
+  padding: 8px 12px;
+  background: #AAAAAA;
+  color: #fff8dc;
+  font-family: 'Roboto Mono', monospace;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: solid 1px #3c2c1e;
+  transition: background-color 0.2s;
+}
+.buttons a:hover {
+  background: #5a3f2a;
+}
+
+/* === Book Layout === */
+.book {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff8dc;
+  border: 1px solid #3c2c1e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.left-page, .right-page {
+  flex: 1 1 45%;
+  padding: 1rem;
+}
+.left-page img, .left-page video, .left-page audio, .left-page iframe {
+  width: 100%;
+  height: auto;
+}
+.left-page audio {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin-top: 1rem;
+}
+@media (max-width: 767px) {
+  .book {
+    flex-direction: column;
+  }
+}
+
+/* === Navigation === */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: #fff8dc;
+  border-bottom: 1px solid #3c2c1e;
+}
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  font-family: 'Roboto Mono', monospace;
+}
+.breadcrumb select, .breadcrumb button {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* === Cover Artwork Styles (Preserved) === */
+.container {
+  max-width: 500px;
+  margin: 1em auto;
+  background-color: #fff8dc;
+  padding: 0 30px 30px 30px;
+  border: 10px solid #3c2c1e;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+.svg-wrapper {
+  margin: 0 auto;
+  padding: 0;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.svg-wrapper svg {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: 425px;
+}
+svg text {
+  font-family: 'Ultra', serif;
+  font-weight: 700;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+.rotating-circle {
+  animation: rotateCircle 30s linear infinite;
+  transform-origin: center;
+}
+.centered-headshot {
+  transform: rotate(5deg);
+  transform-origin: center;
+  clip-path: circle(50%);
+}
+@keyframes rotateCircle {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+	
+<body>
+  <div class="nav-bar">
+    <div class="breadcrumb">
+      <button id="prevBtn">‹ Prev</button>
+      <select id="categorySelect"></select>
+      <select id="itemSelect"></select>
+      <button id="nextBtn">Next ›</button>
+    </div>
+  </div>
+
+  <div class="book">
+    <div class="left-page" id="media-panel"></div>
+    <div class="right-page" id="text-panel"></div>
+  </div>
+
+  <script>
+    let toc = {};
+    let flatList = [];
+    let currentIndex = 0;
+
+    const mediaPanel = document.getElementById('media-panel');
+    const textPanel = document.getElementById('text-panel');
+    const categorySelect = document.getElementById('categorySelect');
+    const itemSelect = document.getElementById('itemSelect');
+
+    async function loadTOC() {
+      toc = await fetch('content/toc.json').then(res => res.json());
+
+      for (const [cat, items] of Object.entries(toc.categories)) {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
+
+        items.forEach(item => {
+          if (typeof item === 'string') {
+            flatList.push({ category: cat, file: item });
+          }
+        });
+      }
+
+      categorySelect.addEventListener('change', () => {
+        updateItemDropdown(categorySelect.value);
+      });
+      itemSelect.addEventListener('change', () => {
+        const selected = itemSelect.value;
+        const index = flatList.findIndex(f => f.file === selected);
+        if (index !== -1) loadContentByIndex(index);
+      });
+
+      updateItemDropdown(categorySelect.value);
+      loadContentByIndex(0);
+    }
+
+    function updateItemDropdown(category) {
+      itemSelect.innerHTML = '';
+      const items = toc.categories[category] || [];
+      items.forEach((item) => {
+        if (typeof item === 'string') {
+          const opt = document.createElement('option');
+          opt.value = item;
+          opt.textContent = item.replace('.json', '').replace(/-/g, ' ');
+          itemSelect.appendChild(opt);
+        }
+      });
+    }
+
+    async function loadContentByIndex(index) {
+      currentIndex = index;
+      const entry = flatList[index];
+      if (!entry) return;
+
+      const res = await fetch(`content/${entry.file}`);
+      const content = await res.json();
+
+      mediaPanel.innerHTML = '';
+      textPanel.innerHTML = '';
+			
+      const type = content.type || '';
+      if (type.startsWith('image')) {
+        const img = document.createElement('img');
+        img.src = `content/support/${content.file}`;
+        img.alt = content.alt || '';
+        mediaPanel.appendChild(img);
+      } else if (type.startsWith('audio')) {
+				const audio = document.createElement('audio');
+				audio.controls = true;
+				audio.autoplay = true;
+				audio.setAttribute('preload', 'metadata');
+				mediaPanel.appendChild(audio);
+				audio.src = `content/support/${content.file}`;
+      } else if (type.startsWith('video')) {
+        const video = document.createElement('video');
+        video.controls = true;
+				video.autoplay = true;
+				video.src = `content/support/${content.file}`;
+        mediaPanel.appendChild(video);
+      } else if (type === 'embed' && content.embedType === 'youtube') {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${content.embedId}`;
+        iframe.setAttribute('allowfullscreen', 'true');
+        mediaPanel.appendChild(iframe);
+      }
+
+			
+      const h2 = document.createElement('h3');
+      h2.textContent = content.title;
+      const h3 = document.createElement('div');
+      h3.className = 'media-type';
+      h3.textContent = content.media;
+      const p = document.createElement('p');
+      p.textContent = content.description;
+      textPanel.append(h2, h3, p);
+
+      categorySelect.value = entry.category;
+      updateItemDropdown(entry.category);
+      itemSelect.value = entry.file;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentIndex > 0) loadContentByIndex(currentIndex - 1);
+    });
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentIndex < flatList.length - 1) loadContentByIndex(currentIndex + 1);
+    });
+
+    loadTOC();
+  </script>
+</body>
+</html>
+
+
+<!-- cover of book index.html --
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Johanna Wilder Designslinger</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css?family=Ultra&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Chivo:300,300i,400,400i,700,700i,900,900i&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Maiden+Orange&display=swap" rel="stylesheet">	
+	<link href="emojiency.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <h4>MOST WANTED!</h4>
+
+    <div class="svg-wrapper">
+      <svg viewBox="0 0 500 500">
+        <defs>
+          <path id="circlePath"
+                d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" />
+        </defs>
+
+        <g class="rotating-circle">
+          <text font-size="34" fill="#3c2c1e">
+            <textPath startOffset="0%" xlink:href="#circlePath">
+              Generative Intelligence&nbsp;&nbsp;★&nbsp;&nbsp;for Immediate Deployment&nbsp;★
+            </textPath>
+          </text>
+        </g>
+
+        <image xlink:href="content/support/wilder-wanted.png"
+               x="-25" y="-38" width="550" height="550"
+               class="centered-headshot" />
+      </svg>
+    </div>
+
+
+    <h3>Johanna ‘Jonnie’ Wilder</h3>
+
+    <h1 class="tagline">
+      ☞ a <strong>LARGE</strong> woman ☜<br>
+      of spicy <strong>LANGUAGE</strong><br>
+      ⤻ and aging-super<strong>MODEL</strong> looks ⤺
+    </h1>
+
+    <div class="buttons">
+      <a href="prototype.html">FOLIO</a>
+      <a href="https://github.com/wildjo/">CODE</a>
+      <a href="https://www.emojiency.com/">FICTION</a>
+      <a href="https://www.zipbangwow.com/">& NON-</a>
+      <a href="https://www.youtube.com/@zipbangwow">A/V</a>
+    </div>
+
+    <h2 class="tagline">
+      <strong>TRANSFORMS</strong> to <strong>FUNCTION</strong><br>
+      in <strong>DIGITAL</strong> and <strong>ANALOG</strong> contexts<br>
+      to <strong>SUIT</strong> your <strong>EVERY NEED</strong>
+    </h2>
+
+  </div>
+</body></html>
+
+-- end cover of book index.html comment -->
+
