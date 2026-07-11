@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "import:wordpress": "python3 scripts/import-wordpress.py",
+    "social-card": "python3 scripts/create-social-card.py",
     "watermark:image": "python3 scripts/watermark-generated-image.py"
   },
   "dependencies": {

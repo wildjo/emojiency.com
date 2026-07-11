@@ -5,12 +5,22 @@ interface Props {
   title?: string;
   description?: string;
   section?: 'articles' | 'news' | 'menu';
+  socialImage?: string;
+  socialImageAlt?: string;
 }
 
-const { title = 'Emojiency', description = 'Fiction, autobiography, and all the gooey stuff in the middle.', section } = Astro.props;
+const {
+  title = 'Emojiency',
+  description = 'Fiction, autobiography, and all the gooey stuff in the middle.',
+  section,
+  socialImage = '/images/social/emojiency-card.png',
+  socialImageAlt = 'The Emojiency logo and tagline.',
+} = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const path = Astro.url.pathname;
+const canonicalUrl = new URL(path, Astro.site || Astro.url.origin).toString();
+const socialImageUrl = new URL(`${base}${socialImage}`, Astro.site || Astro.url.origin).toString();
 const activeSection = section || (path.startsWith(base + '/articles') ? 'articles'
   : path.startsWith(base + '/menu') ? 'menu'
   : 'news');
@@ -22,7 +32,25 @@ const activeSection = section || (path.startsWith(base + '/articles') ? 'article
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
   <link rel="alternate" type="application/rss+xml" title="Emojiency RSS" href={`${base}/rss.xml`} />
+  <meta property="og:site_name" content="Emojiency" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={socialImageUrl} />
+  <meta property="og:image:secure_url" content={socialImageUrl} />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={socialImageAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={socialImageUrl} />
+  <meta name="twitter:image:alt" content={socialImageAlt} />
   <title>{title}</title>
 </head>
 <body>
