@@ -51,8 +51,7 @@ emojiency/
 │   │       ├── about.astro
 │   │       └── recommended.astro
 │   ├── content/
-│   │   ├── articles/            (long-form .md files)
-│   │   └── news/                (short-form .md files)
+│   │   └── posts/YYYY/MM/slug/  (all content; `kind` selects article or news)
 │   ├── styles/
 │   │   └── global.css
 │   └── assets/images/splash/    (legacy, unused)
@@ -62,14 +61,20 @@ emojiency/
 
 ## 3. Creating a News Post
 
-File location: `src/content/news/<slug>.md`
+File location: `src/content/posts/YYYY/MM/<slug>/index.md`
 
 ### Front matter
 
 ```yaml
 ---
 title: "Optional headline"
+slug: cool-find
+kind: news
 date: 2026-04-03
+summary: "A short archive description."
+categories: ["hot-links"]
+tags: []
+format: markdown
 images:
   - src: filename.png
     caption: "Optional caption"
@@ -96,7 +101,8 @@ All fields except `date` are optional. Need at least one of: images or body text
 ```bash
 mkdir -p public/images/news/cool-find
 cp ~/Downloads/screenshot.png public/images/news/cool-find/cool-find-01.png
-cat > src/content/news/cool-find.md << 'EOF'
+mkdir -p src/content/posts/2026/04/cool-find
+cat > src/content/posts/2026/04/cool-find/index.md << 'EOF'
 ---
 title: "Check this out"
 date: 2026-04-05
@@ -116,15 +122,20 @@ git push origin main
 
 ## 4. Creating an Article
 
-File location: `src/content/articles/<slug>.md`
+File location: `src/content/posts/YYYY/MM/<slug>/index.md`
 
 ### Front matter
 
 ```yaml
 ---
 title: "The Full Title of the Essay"
+slug: the-full-title-of-the-essay
+kind: article
 date: 2026-03-15
 summary: "One or two sentence summary for the TOC."
+categories: []
+tags: []
+format: markdown
 hero: hero-image-filename.jpg
 heroCaption: "Caption for lightbox"
 draft: false
@@ -138,7 +149,7 @@ Full article body in markdown.
 ### Image handling
 
 1. Hero images go in `public/images/articles/`
-2. Inline images also go in `public/images/articles/`
+2. Inline images may be colocated with the post or stored in `public/images/articles/`
 3. Reference hero by filename only in front matter
 
 ## 5. Conversational Posting Workflow
@@ -150,7 +161,7 @@ When the user says "Hey, here's a cool article" or shares images:
 2. Generate slug from title or content
 3. Set today's date
 4. Save images to `public/images/news/<slug>/` when there are multiple images, using clean slugged filenames
-5. Create markdown in `src/content/news/`
+5. Create markdown in `src/content/posts/YYYY/MM/<slug>/index.md` with `kind: news`
 6. Commit: `news: <description>`
 7. Push to main
 
@@ -159,7 +170,7 @@ When the user says "Hey, here's a cool article" or shares images:
 2. Convert to markdown if needed
 3. Get or generate: title, summary, hero image
 4. Save images to `public/images/articles/`
-5. Create markdown in `src/content/articles/`
+5. Create markdown in `src/content/posts/YYYY/MM/<slug>/index.md` with `kind: article`
 6. Commit: `article: <title>`
 7. Push to main
 
@@ -171,7 +182,7 @@ When the user says "Hey, here's a cool article" or shares images:
 
 ## 6. Updating Recommendations
 
-1. Read all articles in `src/content/articles/`
+1. Read entries with `kind: article` in `src/content/posts/`
 2. Pick 3 best recent + 3 best from archives
 3. Write 1-2 sentence summary of each
 4. Update `src/pages/menu/recommended.astro`
@@ -228,7 +239,17 @@ The client picks from splashes whose context matches the current date. Fields ar
 
 ## 8. Deployment
 
-Fully automated via GitHub Actions. Push to `main` and it builds and deploys.
+Fully automated via GitHub Actions. Push to `main` and it builds and deploys to the GitHub Pages staging URL while WordPress remains live.
+
+For the eventual production-domain build, use `SITE_URL=https://www.emojiency.com SITE_BASE=/ npm run build`.
+
+### WordPress snapshot import
+
+```bash
+npm run import:wordpress -- /path/to/emojiency.WordPress.xml --download-media --prune-media
+```
+
+The importer includes only published WordPress posts. It deliberately excludes drafts and non-post plugin records. Imported files are organized by year/month/slug while their explicit `slug` keeps the public permalink at `/<slug>/`.
 
 ### DNS (Mythic Beasts)
 - CNAME: `www.emojiency.com` → `<username>.github.io`

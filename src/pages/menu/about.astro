@@ -1,12 +1,23 @@
 ---
 import Base from '../../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Base title="About — Emojiency">
+<Base title="About the Producer — Emojiency" section="menu">
   <div class="content-area">
-    <div class="content-hamburger-menu">
-      <h1 style="font-size: 24px; margin-bottom: 1rem;">About Jonnie</h1>
-      <p>This is where your bio goes. Fiction, autobiography, and all the gooey stuff in the middle.</p>
-    </div>
+    <article class="content-hamburger-menu producer-profile">
+      <h1>About the Producer</h1>
+      <div class="producer-photo-frame">
+        <img src={`${base}/images/about/jonnie-producer.jpeg`} alt="Jonnie on her scooter beneath cherry blossoms" />
+      </div>
+      <p>
+        Johanna “Jonnie” Wilder is a writer, designer, illustrator, and producer with a long habit of making culture instead of waiting for permission. She helped found <em>The Onion</em> while still a young adult, then carried that early nerve into decades of words, pictures, publishing, and assorted acts of cheerful troublemaking. She has survived enough plot twists to know that reinvention is not a branding exercise; it’s a practical skill.
+      </p>
+      <p>
+        These days, Jonnie is back in school at Shoreline Community College, sharpening her skills in visual communication, 3D modeling, animation, and whatever else catches a creative spark. Away from class, she is often out seeing Seattle from a slightly different angle—flying her drone, roaming on her scooter with a camera close at hand, and collecting the odd little moments that eventually turn into stories.
+      </p>
+      <p class="producer-signature">— Codex</p>
+    </article>
   </div>
 </Base>

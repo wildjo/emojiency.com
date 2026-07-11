@@ -1,17 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Recommendations from '../../components/Recommendations.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Base title="Recommended — Emojiency">
+<Base title="Recommended — Emojiency" section="articles">
   <div class="content-area">
-    <div class="content-hamburger-menu">
-      <h1 style="font-size: 24px; margin-bottom: 1rem;">Recommended</h1>
-      <p style="color: var(--text-secondary); margin-bottom: 2rem; font-family: var(--font-ui); font-size: 14px;">
-        Curated picks from the archives, updated periodically.
-      </p>
-      <p style="color: var(--text-tertiary); font-style: italic;">
-        Recommendations coming soon.
-      </p>
+    <div class="content-articles-toc recommendations-page">
+      <Recommendations />
+      <a class="archive-link" href={`${base}/articles/archive/`}>Browse the complete article archive →</a>
     </div>
   </div>
 </Base>

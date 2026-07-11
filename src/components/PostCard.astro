@@ -1,0 +1,27 @@
+---
+import { formatPostDate, postThumbnail, postUrl, type Post } from '../lib/content';
+
+interface Props {
+  post: Post;
+  variant?: 'recommendation' | 'archive';
+}
+
+const { post, variant = 'archive' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const thumbnail = postThumbnail(post, base);
+---
+
+<a class:list={['post-card', `post-card-${variant}`, { 'post-card-with-image': thumbnail }]} href={postUrl(post, base)}>
+  {thumbnail && (
+    <div class="post-card-image-frame">
+      <img src={thumbnail.src} alt={thumbnail.caption} loading="lazy" />
+    </div>
+  )}
+  <div class="post-card-copy">
+    <div class="post-card-title">{post.data.title || post.id}</div>
+    {post.data.summary && <div class="post-card-summary">{post.data.summary}</div>}
+    <div class="post-card-date">
+      {formatPostDate(post)}
+    </div>
+  </div>
+</a>

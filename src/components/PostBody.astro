@@ -1,0 +1,19 @@
+---
+import { render } from 'astro:content';
+import { localizeImportedHtml, type Post } from '../lib/content';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { Content } = await render(post);
+const importedHtml = post.data.format === 'html'
+  ? localizeImportedHtml(post.body || '', base)
+  : '';
+---
+
+{post.data.format === 'html'
+  ? <Fragment set:html={importedHtml} />
+  : <Content />}

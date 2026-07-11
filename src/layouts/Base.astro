@@ -4,15 +4,16 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  section?: 'articles' | 'news' | 'menu';
 }
 
-const { title = 'Emojiency', description = 'Fiction, autobiography, and all the gooey stuff in the middle.' } = Astro.props;
+const { title = 'Emojiency', description = 'Fiction, autobiography, and all the gooey stuff in the middle.', section } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const path = Astro.url.pathname;
-const activeSection = path.startsWith(base + '/articles') ? 'articles'
+const activeSection = section || (path.startsWith(base + '/articles') ? 'articles'
   : path.startsWith(base + '/menu') ? 'menu'
-  : 'news';
+  : 'news');
 ---
 
 <!DOCTYPE html>
@@ -21,14 +22,25 @@ const activeSection = path.startsWith(base + '/articles') ? 'articles'
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <link rel="alternate" type="application/rss+xml" title="Emojiency RSS" href={`${base}/rss.xml`} />
   <title>{title}</title>
 </head>
 <body>
 
   <header class="site-header">
     <button class={`header-hamburger ${activeSection === 'menu' ? 'active' : ''}`} aria-label="Menu" onclick={`window.location.href='${base}/menu/'`}>&#9776;</button>
-    <a class={`header-articles ${activeSection === 'articles' ? 'active' : ''}`} href={`${base}/articles/`}>articles</a>
-    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href={`${base}/`}>news</a>
+    <a class={`header-articles ${activeSection === 'articles' ? 'active' : ''}`} href={`${base}/articles/`}>
+      <span>articles</span>
+      <span class="header-new-indicator" id="new-article-indicator" role="status" aria-label="New article available" hidden>
+        <img src={`${base}/images/notification-bell.png`} alt="" aria-hidden="true" />
+      </span>
+    </a>
+    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href={`${base}/`}>
+      <span>news</span>
+      <span class="header-new-indicator" id="new-news-indicator" role="status" aria-label="New news available" hidden>
+        <img src={`${base}/images/notification-bell.png`} alt="" aria-hidden="true" />
+      </span>
+    </a>
   </header>
 
   <main>
@@ -43,17 +55,68 @@ const activeSection = path.startsWith(base + '/articles') ? 'articles'
     </div>
   </footer>
 
-  <div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
     <div class="lightbox-panel">
       <img id="lightbox-img" src="" alt="" />
       <div class="lightbox-caption" id="lightbox-caption"></div>
-      <div class="lightbox-controls">
-        <button class="lightbox-nav" id="lightbox-prev" type="button" aria-label="Previous image">&#8592;</button>
-        <button class="lightbox-nav" id="lightbox-next" type="button" aria-label="Next image">&#8594;</button>
-      </div>
+    </div>
+    <div class="lightbox-dock">
+      <button class="lightbox-nav" id="lightbox-prev" type="button" aria-label="Previous image">&#8592;</button>
       <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+      <button class="lightbox-nav" id="lightbox-next" type="button" aria-label="Next image">&#8594;</button>
+      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image viewer">
+        <span class="lightbox-close-icon" aria-hidden="true">&times;</span>
+        <span class="lightbox-close-key">ESC</span>
+      </button>
     </div>
   </div>
+
+  <script is:inline define:vars={{ versionUrl: `${base}/version.json` }}>
+    (() => {
+      const indicators = {
+        article: document.getElementById('new-article-indicator'),
+        news: document.getElementById('new-news-indicator'),
+      };
+      let baseline = null;
+      let checking = false;
+
+      const contentKey = (entry) => entry ? `${entry.id}:${entry.published}` : '';
+
+      async function checkForNewPosts() {
+        if (checking) return;
+        checking = true;
+        try {
+          const separator = versionUrl.includes('?') ? '&' : '?';
+          const response = await fetch(`${versionUrl}${separator}check=${Date.now()}`, { cache: 'no-store' });
+          if (!response.ok) return;
+          const version = await response.json();
+          const latest = version.latest || {};
+
+          if (!baseline) {
+            baseline = {
+              article: contentKey(latest.article),
+              news: contentKey(latest.news),
+            };
+            return;
+          }
+
+          if (contentKey(latest.article) && contentKey(latest.article) !== baseline.article) {
+            indicators.article.hidden = false;
+          }
+          if (contentKey(latest.news) && contentKey(latest.news) !== baseline.news) {
+            indicators.news.hidden = false;
+          }
+        } catch {
+          // A temporary network failure should not disturb the page.
+        } finally {
+          checking = false;
+        }
+      }
+
+      checkForNewPosts();
+      window.setInterval(checkForNewPosts, 15000);
+    })();
+  </script>
 
   <script is:inline>
     const lightboxState = {
@@ -93,6 +156,8 @@ const activeSection = path.startsWith(base + '/articles') ? 'articles'
       });
 
       overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
     }
 
     function openLightboxGallery(images, index = 0) {
@@ -118,7 +183,10 @@ const activeSection = path.startsWith(base + '/articles') ? 'articles'
     }
 
     function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('active');
+      const overlay = document.getElementById('lightbox');
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
     }
 
     document.getElementById('lightbox').addEventListener('click', (event) => {
@@ -135,9 +203,78 @@ const activeSection = path.startsWith(base + '/articles') ? 'articles'
       showNextLightboxImage();
     });
 
+    document.getElementById('lightbox-close').addEventListener('click', (event) => {
+      event.stopPropagation();
+      closeLightbox();
+    });
+
     window.openLightbox = openLightbox;
     window.openLightboxGallery = openLightboxGallery;
     window.closeLightbox = closeLightbox;
+
+    document.querySelectorAll('[data-lightbox-gallery]').forEach((gallery) => {
+      const images = JSON.parse(gallery.dataset.images || '[]');
+      gallery.querySelectorAll('[data-gallery-index]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openLightboxGallery(images, Number(button.dataset.galleryIndex || 0));
+        });
+      });
+    });
+
+    document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+      const track = carousel.querySelector('[data-carousel-track]');
+      const dots = Array.from(carousel.querySelectorAll('[data-carousel-dot]'));
+      const slides = carousel.querySelectorAll('[data-gallery-index]');
+      if (!track || slides.length < 2) return;
+      let currentIndex = 0;
+      let timer;
+
+      const showSlide = (index) => {
+        currentIndex = index;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+      };
+      const restart = () => {
+        window.clearInterval(timer);
+        timer = window.setInterval(() => showSlide((currentIndex + 1) % slides.length), 5000);
+      };
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+          restart();
+        });
+      });
+      carousel.addEventListener('mouseenter', () => window.clearInterval(timer));
+      carousel.addEventListener('mouseleave', restart);
+      carousel.addEventListener('focusin', () => window.clearInterval(timer));
+      carousel.addEventListener('focusout', restart);
+      restart();
+    });
+
+    document.querySelectorAll('.article-body').forEach((container) => {
+      const imageElements = Array.from(container.querySelectorAll('img'));
+      const images = imageElements.map((image) => ({
+        src: image.currentSrc || image.src,
+        caption: image.alt || image.closest('figure')?.querySelector('figcaption')?.textContent?.trim() || '',
+      }));
+      imageElements.forEach((image, index) => {
+        image.setAttribute('role', 'button');
+        image.setAttribute('tabindex', '0');
+        image.setAttribute('aria-label', `Open image ${index + 1} of ${images.length}`);
+        const open = () => openLightboxGallery(images, index);
+        image.addEventListener('click', open);
+        image.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            open();
+          }
+        });
+      });
+    });
+
+    document.querySelectorAll('.article-hero').forEach((image) => {
+      image.addEventListener('click', () => openLightbox(image.currentSrc || image.src, image.alt || ''));
+    });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();

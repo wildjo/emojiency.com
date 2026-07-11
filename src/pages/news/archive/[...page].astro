@@ -1,0 +1,33 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { published } from '../../../lib/content';
+import PostCard from '../../../components/PostCard.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const news = published(await getCollection('posts'))
+    .filter((post) => post.data.kind === 'news');
+  return paginate(news, { pageSize: 30 });
+}
+
+const { page } = Astro.props;
+---
+
+<Base title={`News archive${page.currentPage > 1 ? `, page ${page.currentPage}` : ''} — Emojiency`} section="news">
+  <div class="content-area">
+    <div class="content-articles-toc">
+      <div class="section-heading">
+        <h1>News &amp; hot links archive</h1>
+        <p>{page.total} posts, newest first.</p>
+      </div>
+      {page.data.map((post) => (
+        <PostCard post={post} variant="archive" />
+      ))}
+      <nav class="pagination" aria-label="News archive pages">
+        {page.url.prev && <a href={page.url.prev}>← Newer</a>}
+        <span>Page {page.currentPage} of {page.lastPage}</span>
+        {page.url.next && <a href={page.url.next}>Older →</a>}
+      </nav>
+    </div>
+  </div>
+</Base>

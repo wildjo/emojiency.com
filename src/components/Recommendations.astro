@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import { published } from '../lib/content';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const recommendationIds = [
+  'a-segment-of-a-tour-of-the-national-gallery-of-flatland',
+  'trust-fund-baby',
+  'the-blizzard-of-78',
+  'johanna-wilder-alternative-newspaper-mogul-shuffles-off-mortal-coil',
+  'i-want-to-fucking-go-golfing',
+  'benzo-buddies-coda',
+];
+const articleById = new Map(
+  published(await getCollection('posts'))
+    .filter((post) => post.data.kind === 'article')
+    .map((post) => [post.id, post]),
+);
+const recommendations = recommendationIds
+  .map((id) => articleById.get(id))
+  .filter((post) => post !== undefined);
+---
+
+<section class:list={['recommendations', { 'recommendations-compact': compact }]}>
+  <div class="section-heading">
+    <h1>Recommended</h1>
+    <p>Curated picks from recent work and the archives.</p>
+  </div>
+  <div class="recommendation-list">
+    {recommendations.map((post) => (
+      <PostCard post={post} variant="recommendation" />
+    ))}
+  </div>
+</section>

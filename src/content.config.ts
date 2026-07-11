@@ -1,23 +1,22 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const articles = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    summary: z.string(),
-    hero: z.string().optional(),
-    heroCaption: z.string().optional(),
-    draft: z.boolean().default(false),
-  }),
-});
-
-const news = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: z.object({
     title: z.string().optional(),
+    kind: z.enum(['article', 'news']),
     date: z.coerce.date(),
+    timeZone: z.string().optional(),
+    modified: z.coerce.date().optional(),
+    summary: z.string().optional(),
+    categories: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    wordpressId: z.number().int().positive().optional(),
+    legacyUrl: z.string().optional(),
+    format: z.enum(['markdown', 'html']).default('markdown'),
+    hero: z.string().optional(),
+    heroCaption: z.string().optional(),
     images: z.array(z.object({
       src: z.string(),
       caption: z.string().optional(),
@@ -27,4 +26,4 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { articles, news };
+export const collections = { posts };

@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PostBody from '../components/PostBody.astro';
+import { getCollection } from 'astro:content';
+import { formatPostDate } from '../lib/content';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).filter((post) => !post.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const title = post.data.title || 'Emojiency';
+---
+
+<Base title={`${title} — Emojiency`} description={post.data.summary} section={post.data.kind === 'article' ? 'articles' : 'news'}>
+  <div class="content-area">
+    <article class="content-article-detail">
+      <div class="article-header">
+        <h1 class="article-title">{title}</h1>
+        <div class="article-date">
+          {formatPostDate(post)}
+        </div>
+      </div>
+
+      {post.data.hero && (
+        <img
+          class="article-hero"
+          src={`${base}/images/articles/${post.data.hero}`}
+          alt={post.data.heroCaption || title}
+        />
+      )}
+
+      <div class:list={['article-body', { 'news-detail-body': post.data.kind === 'news' }]}><PostBody post={post} /></div>
+
+      {post.data.link && (
+        <p class="external-source"><a href={post.data.link} target="_blank" rel="noopener">Visit the linked source →</a></p>
+      )}
+    </article>
+  </div>
+</Base>
