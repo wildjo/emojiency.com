@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "import:wordpress": "python3 scripts/import-wordpress.py"
+    "import:wordpress": "python3 scripts/import-wordpress.py",
+    "watermark:image": "python3 scripts/watermark-generated-image.py"
   },
   "dependencies": {
     "astro": "^6.4.8"
