@@ -9,20 +9,36 @@ interface Props {
 
 const { compact = false } = Astro.props;
 const recommendationIds = [
-  'a-segment-of-a-tour-of-the-national-gallery-of-flatland',
-  'trust-fund-baby',
-  'the-blizzard-of-78',
+  'whos-assimilating-whom',
+  'math-is-hard',
+  'morality-star-wars-and-obi-wan-kenobi',
+  'slave-morality',
+  'the-politics-of-tom-clancys-the-division-2',
+  'start-em-young-embrace-the-violence-of-video-games',
+  'bullies-rule-the-world-only-because-we-demand-it',
+  'morality-monday-mash',
+  'the-terrible-flag-of-my-people',
+  'quantum-rocks',
+  'artificial-intelligence-needs-our-help-lets-design-a-user-experience-for-ai',
+  'what-the-autopsy-revealed',
+  'i-wrote-vacuum-from-the-onion-november-15-1988',
+  '8161',
+  'social-anxiety',
+  'farewell-worthy-adversary',
+  'dont-force-feelings-feel-them-then-let-them-go',
+  'my-cyberpunk-future',
+  'international-noobs-day',
+  'rebirth-and-resurrection-as-metaphor',
+  'doing-it-right',
   'johanna-wilder-alternative-newspaper-mogul-shuffles-off-mortal-coil',
-  'i-want-to-fucking-go-golfing',
-  'benzo-buddies-coda',
+  'battling-back',
 ];
-const articleById = new Map(
+const postById = new Map(
   published(await getCollection('posts'))
-    .filter((post) => post.data.kind === 'article')
     .map((post) => [post.id, post]),
 );
 const recommendations = recommendationIds
-  .map((id) => articleById.get(id))
+  .map((id) => postById.get(id))
   .filter((post) => post !== undefined);
 ---
 
