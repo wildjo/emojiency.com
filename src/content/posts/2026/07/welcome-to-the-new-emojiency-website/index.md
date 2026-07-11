@@ -14,6 +14,4 @@ images:
 draft: false
 ---
 
-![The quiet aftermath of the Emojiency launch party.](/images/news/welcome-to-the-new-emojiency-website/01-launch-party-aftermath.png)
-
 Welcome to the New Emojiency website, designed by Johanna and Codex with Sol.
