@@ -4,7 +4,7 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  section?: 'articles' | 'news' | 'menu';
+  section?: 'articles' | 'news' | 'menu' | 'home';
   socialImage?: string;
   socialImageAlt?: string;
 }
@@ -63,7 +63,7 @@ const activeSection = section || (path.startsWith(base + '/articles') ? 'article
         <img src={`${base}/images/notification-bell.png`} alt="" aria-hidden="true" />
       </span>
     </a>
-    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href={`${base}/`}>
+    <a class={`header-news ${activeSection === 'news' ? 'active' : ''}`} href={`${base}/news/`}>
       <span>news</span>
       <span class="header-new-indicator" id="new-news-indicator" role="status" aria-label="New news available" hidden>
         <img src={`${base}/images/notification-bell.png`} alt="" aria-hidden="true" />

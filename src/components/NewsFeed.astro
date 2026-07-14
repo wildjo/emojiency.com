@@ -1,0 +1,59 @@
+---
+import PostBody from './PostBody.astro';
+import NewsGallery from './NewsGallery.astro';
+import { getCollection } from 'astro:content';
+import { extractImportedImages, formatPostDate, isPostTruncated, postUrl, published } from '../lib/content';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const allNews = published(await getCollection('posts'))
+  .filter((post) => post.data.kind === 'news')
+  .slice(0, 20)
+  .map((post) => ({
+    post,
+    truncated: isPostTruncated(post),
+    gallery: post.data.images?.map((image) => ({
+      src: `${base}/images/news/${image.src}`,
+      caption: image.caption || '',
+    })) || (post.data.format === 'html' ? extractImportedImages(post.body || '', base) : []),
+  }));
+---
+
+<div class="content-news-feed">
+  {allNews.map(({ post, gallery, truncated }) => (
+    <article class="news-post">
+      {post.data.title && (
+        <h3 class="news-post-title">
+          {truncated
+            ? <a href={postUrl(post, base)}>{post.data.title}</a>
+            : post.data.title}
+        </h3>
+      )}
+
+      <NewsGallery images={gallery} />
+
+      <div class="news-post-text">
+        {post.data.format === 'html'
+          ? (
+            <p>
+              {truncated ? post.data.summary?.replace(/[.…]\s*$/, '') : post.data.summary}
+              {truncated && <a class="news-more-link" href={postUrl(post, base)}>… more</a>}
+            </p>
+          )
+          : <PostBody post={post} />}
+      </div>
+
+      {post.data.link && (
+        <div class="news-post-link">
+          <a href={post.data.link} target="_blank" rel="noopener">
+            {new URL(post.data.link).hostname.replace(/^www\./, '')}
+          </a>
+        </div>
+      )}
+
+      <div class="news-post-date">
+        {formatPostDate(post, 'short')}
+      </div>
+    </article>
+  ))}
+  <a class="archive-link" href={`${base}/news/archive/`}>Browse the news archive →</a>
+</div>

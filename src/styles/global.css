@@ -139,6 +139,7 @@ img { max-width: 100%; height: auto; display: block; }
   grid-column: 5 / 7; padding: 1.5rem 1.25rem;
   background: var(--bg-content);
 }
+.news-page .content-news-feed { grid-column: 2 / 6; }
 .content-articles-toc {
   grid-column: 2 / 5; padding: 1.5rem 2rem;
   border-left: var(--border-rule); border-right: var(--border-rule);
@@ -347,6 +348,7 @@ body.lightbox-open { overflow: hidden; }
   .header-articles { flex: 1; font-size: 16px; padding: 12px 14px; }
   .header-news { flex: 0 0 112px; font-size: 16px; padding: 12px 14px; border-right: none; }
   .content-area { display: block; }
+  .home-grid .content-news-feed { display: none; }
   .content-home-main, .content-news-feed, .content-articles-toc,
   .content-article-detail, .content-hamburger-menu {
     border: none; border-bottom: var(--border-rule); padding: 1.5rem 1rem;
