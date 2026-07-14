@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PostBody from '../components/PostBody.astro';
 import { getCollection } from 'astro:content';
-import { formatPostDate } from '../lib/content';
+import { articleImageUrl, formatPostDate } from '../lib/content';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('posts')).filter((post) => !post.data.draft);
@@ -27,7 +27,7 @@ const title = post.data.title || 'Emojiency';
       {post.data.hero && (
         <img
           class="article-hero"
-          src={`${base}/images/articles/${post.data.hero}`}
+          src={articleImageUrl(post.data.hero, base)}
           alt={post.data.heroCaption || title}
         />
       )}

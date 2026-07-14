@@ -6,6 +6,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <Base title="Menu — Emojiency">
   <div class="content-area">
     <div class="content-hamburger-menu">
+      <a class="menu-link" href={`${base}/`}>
+        Home
+      </a>
       <a class="menu-link" href="https://duckduckgo.com/?q=site%3Aemojiency.com" target="_blank" rel="noopener">
         search (via DuckDuckGo)
       </a>
@@ -14,6 +17,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </a>
       <a class="menu-link" href={`${base}/articles/archive/`}>
         article archive
+      </a>
+      <a class="menu-link" href={`${base}/menu/recommended/`}>
+        recommended articles
       </a>
       <a class="menu-link" href={`${base}/news/archive/`}>
         news archive
