@@ -35,7 +35,7 @@ emojiency/
 ├── public/
 │   └── images/
 │       ├── splash/
-│       ├── articles/
+│       ├── articles/YYYY/MM/slug/
 │       └── news/
 ├── src/
 │   ├── content.config.ts
@@ -143,7 +143,7 @@ summary: "One or two sentence summary for the TOC."
 categories: []
 tags: []
 format: markdown
-hero: hero-image-filename.jpg
+hero: YYYY/MM/the-full-title-of-the-essay/hero-image.jpg
 heroCaption: "Caption for lightbox"
 draft: false
 ---
@@ -155,9 +155,9 @@ Full article body in markdown.
 
 ### Image handling
 
-1. Hero images go in `public/images/articles/`
-2. Inline images may be colocated with the post or stored in `public/images/articles/`
-3. Reference hero by filename only in front matter
+1. Put every new article image in `public/images/articles/YYYY/MM/<article-slug>/`.
+2. Use that same dated, per-article path for the hero image and any inline images. This keeps each directory small even as the site grows.
+3. Reference the hero path relative to `public/images/articles/`, for example `hero: 2026/07/the-full-title-of-the-essay/hero-image.jpg`.
 
 ## 5. Conversational Posting Workflow
 
@@ -178,7 +178,7 @@ When the user says "Hey, here's a cool article" or shares images:
 1. User provides content (Word, RTF, markdown, plain text)
 2. Convert to markdown if needed
 3. Get or generate: title, summary, hero image
-4. Save images to `public/images/articles/`
+4. Save images to `public/images/articles/YYYY/MM/<article-slug>/` and use the same relative path in `hero`. Do not put new article images directly in `public/images/articles/`.
 5. If an image was AI-generated, run `npm run watermark:image -- <image> --generator "<generator name>"` and visually verify the attribution
 6. Create markdown in `src/content/posts/YYYY/MM/<slug>/index.md` with `kind: article`
 7. Commit: `article: <title>`
@@ -273,7 +273,21 @@ npm run build     # Build to dist/
 npm run preview   # Preview production build
 ```
 
-## 10. Content Schema Quick Reference
+## 10. Change Review and Publishing Workflow
+
+Code changes are reviewed locally before they are published. Do not assume that passing automated checks authorizes a commit, push, or deployment.
+
+1. Make the requested change while preserving unrelated work in the working tree.
+2. Run the relevant automated checks. For site behavior or layout changes, this includes a production build whenever the build is available.
+3. Start the changed site locally and verify the affected desktop and mobile behavior in a browser.
+4. Give the user a clickable local URL, normally `http://localhost:4321/`, and keep the local server running while they review it.
+5. Wait for the user's explicit sign-off. They may request further changes and repeat the local-review cycle.
+6. Commit, push, or deploy only after the user explicitly asks for that action. Passing tests or receiving design sign-off does not by itself authorize publishing.
+7. After publishing, report the commit, branch, and live or staging URL, and verify the deployed result when possible.
+
+If the build, local server, or browser verification is blocked, report that clearly instead of describing the change as ready for sign-off.
+
+## 11. Content Schema Quick Reference
 
 ### News
 | Field  | Type   | Required | Notes |

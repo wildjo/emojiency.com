@@ -139,7 +139,11 @@ img { max-width: 100%; height: auto; display: block; }
   grid-column: 5 / 7; padding: 1.5rem 1.25rem;
   background: var(--bg-content);
 }
-.news-page .content-news-feed { grid-column: 2 / 6; }
+.news-page .content-news-feed {
+  grid-column: 3 / 6;
+  border-left: var(--border-rule);
+  border-right: var(--border-rule);
+}
 .content-articles-toc {
   grid-column: 2 / 5; padding: 1.5rem 2rem;
   border-left: var(--border-rule); border-right: var(--border-rule);

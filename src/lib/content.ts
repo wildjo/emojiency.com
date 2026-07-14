@@ -52,6 +52,10 @@ export interface GalleryImage {
   caption: string;
 }
 
+export function articleImageUrl(image: string, base: string) {
+  return `${base}/images/articles/${image}`;
+}
+
 export function extractImportedImages(body: string, base: string): GalleryImage[] {
   const images: GalleryImage[] = [];
   const seen = new Set<string>();
@@ -77,7 +81,7 @@ export function postThumbnail(post: Post, base: string): GalleryImage | undefine
   }
   if (post.data.hero) {
     return {
-      src: `${base}/images/articles/${post.data.hero}`,
+      src: articleImageUrl(post.data.hero, base),
       caption: post.data.heroCaption || post.data.title || '',
     };
   }
@@ -97,12 +101,14 @@ export function localizeImportedHtml(body: string, base: string) {
     },
   );
   const localized = protectedBody
+    .replace(
+      /https?:\/\/(?:www\.)?emojiency\.com(?:\/bloggityblogblog)?\/\d{4}\/\d{2}\/([^/]+)\//gi,
+      `${base}/$1/`,
+    )
     .replaceAll('https://www.emojiency.com', base)
     .replaceAll('http://www.emojiency.com', base)
     .replaceAll('https://emojiency.com', base)
     .replaceAll('http://emojiency.com', base);
-  const escapedBase = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return localized
-    .replace(new RegExp(`${escapedBase}(?:/bloggityblogblog)?/\\d{4}/\\d{2}/([^/]+)/`, 'g'), `${base}/$1/`)
     .replace(/__EMOJIENCY_EXTERNAL_MEDIA_(\d+)__/g, (_, index) => externalMedia[Number(index)]);
 }
