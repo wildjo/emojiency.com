@@ -147,10 +147,39 @@ const activeSection = section || (path.startsWith(base + '/articles') ? 'article
   </script>
 
   <script is:inline>
+    const lightboxOverlay = document.getElementById('lightbox');
+    const lightboxDock = lightboxOverlay.querySelector('.lightbox-dock');
+    const lightboxHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const lightboxDockIdleDelay = 5000;
+    let lightboxDockIdleTimer;
+
     const lightboxState = {
       images: [],
       index: 0,
     };
+
+    function clearLightboxDockIdleTimer() {
+      window.clearTimeout(lightboxDockIdleTimer);
+      lightboxDockIdleTimer = undefined;
+    }
+
+    function sinkLightboxDock() {
+      if (!lightboxOverlay.classList.contains('active')) return;
+      if (lightboxDock.matches(':hover') || lightboxDock.matches(':focus-within')) return;
+      lightboxDock.classList.add('is-idle');
+    }
+
+    function scheduleLightboxDockIdle() {
+      clearLightboxDockIdleTimer();
+      if (!lightboxOverlay.classList.contains('active') || !lightboxHoverPointer.matches) return;
+      if (lightboxDock.matches(':hover') || lightboxDock.matches(':focus-within')) return;
+      lightboxDockIdleTimer = window.setTimeout(sinkLightboxDock, lightboxDockIdleDelay);
+    }
+
+    function revealLightboxDock() {
+      lightboxDock.classList.remove('is-idle');
+      scheduleLightboxDockIdle();
+    }
 
     function renderLightbox() {
       const overlay = document.getElementById('lightbox');
@@ -186,6 +215,7 @@ const activeSection = section || (path.startsWith(base + '/articles') ? 'article
       overlay.classList.add('active');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
+      revealLightboxDock();
     }
 
     function openLightboxGallery(images, index = 0) {
@@ -211,14 +241,36 @@ const activeSection = section || (path.startsWith(base + '/articles') ? 'article
     }
 
     function closeLightbox() {
-      const overlay = document.getElementById('lightbox');
-      overlay.classList.remove('active');
-      overlay.setAttribute('aria-hidden', 'true');
+      clearLightboxDockIdleTimer();
+      lightboxDock.classList.remove('is-idle');
+      lightboxOverlay.classList.remove('active');
+      lightboxOverlay.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lightbox-open');
     }
 
-    document.getElementById('lightbox').addEventListener('click', (event) => {
+    lightboxOverlay.addEventListener('click', (event) => {
       if (event.target.id === 'lightbox') closeLightbox();
+    });
+
+    lightboxOverlay.addEventListener('pointermove', (event) => {
+      if (event.pointerType && event.pointerType !== 'mouse') return;
+      revealLightboxDock();
+    }, { passive: true });
+
+    lightboxOverlay.addEventListener('pointerenter', revealLightboxDock);
+    lightboxOverlay.addEventListener('pointerleave', scheduleLightboxDockIdle);
+    lightboxDock.addEventListener('pointerenter', revealLightboxDock);
+    lightboxDock.addEventListener('pointerleave', scheduleLightboxDockIdle);
+    lightboxDock.addEventListener('focusin', revealLightboxDock);
+    lightboxDock.addEventListener('focusout', scheduleLightboxDockIdle);
+
+    lightboxHoverPointer.addEventListener('change', () => {
+      if (lightboxHoverPointer.matches) {
+        scheduleLightboxDockIdle();
+      } else {
+        clearLightboxDockIdleTimer();
+        lightboxDock.classList.remove('is-idle');
+      }
     });
 
     document.getElementById('lightbox-prev').addEventListener('click', (event) => {
